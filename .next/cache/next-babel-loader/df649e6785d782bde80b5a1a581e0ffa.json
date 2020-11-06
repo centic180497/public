@@ -1,0 +1,1 @@
+{"ast":null,"code":"import MapViolation from './googlemap_violation';\nexport default MapViolation;","map":null,"metadata":{},"sourceType":"module"}

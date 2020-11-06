@@ -1,0 +1,1 @@
+{"ast":null,"code":"import ClientClass from './client';\nimport WebsocketClass from './websocket';\nvar Client = new ClientClass();\nvar WebsocketClient = new WebsocketClass();\nexport { Client, WebsocketClient };","map":null,"metadata":{},"sourceType":"module"}

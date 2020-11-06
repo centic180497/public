@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport SiteMap from \"../components/site_map\";\nexport default function Home() {\n  return /*#__PURE__*/_jsx(SiteMap, {});\n}","map":null,"metadata":{},"sourceType":"module"}

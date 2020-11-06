@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport React from 'react';\nimport MapOptions from '../google_map_controlled';\n\nvar Map = function Map(props) {\n  return /*#__PURE__*/_jsx(MapOptions, {});\n};\n\nexport default Map;","map":null,"metadata":{},"sourceType":"module"}

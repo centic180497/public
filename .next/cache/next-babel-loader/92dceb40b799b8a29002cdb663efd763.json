@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { connect } from 'react-redux';\nimport SiteMap from './site_map';\nimport { getDataNoParking } from '../../redux/actions/parking';\nexport default connect(null, {\n  getDataNoParking\n})(SiteMap);","map":null,"metadata":{},"sourceType":"module"}

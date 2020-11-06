@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { combineReducers } from \"redux\"; // import map from \"./map\";\n\nimport searchViolation from './violation';\nexport default combineReducers({\n  // map,\n  searchViolation: searchViolation\n});","map":null,"metadata":{},"sourceType":"module"}

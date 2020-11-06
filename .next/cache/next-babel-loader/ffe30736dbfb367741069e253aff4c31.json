@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default {\n  GET_DATA_NOPARKING_REQUEST: 'GET_DATA_NOPARKING_REQUEST',\n  GET_DATA_NOPARKING_SUCCESS: 'GET_DATA_NOPARKING_SUCCESS',\n  GET_DATA_NOPARKING_FAILURE: 'GET_DATA_NOPARKING_FAILURE'\n};","map":null,"metadata":{},"sourceType":"module"}

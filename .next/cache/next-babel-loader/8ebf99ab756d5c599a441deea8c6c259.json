@@ -1,0 +1,1 @@
+{"ast":null,"code":"import SearchTable from './search_violation';\nexport default SearchTable;","map":null,"metadata":{},"sourceType":"module"}

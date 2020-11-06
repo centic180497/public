@@ -1,0 +1,1 @@
+{"ast":null,"code":"import * as Types from '../../action_types/search_violation';\nexport function showInfowindow(item) {\n  return {\n    type: Types.SHOW_INFOWINDOW_VIOLATION,\n    payload: item\n  };\n}\nexport function clearInfowindow() {\n  return {\n    type: Types.CLEAR_INFOWINDOW_VIOLATION\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

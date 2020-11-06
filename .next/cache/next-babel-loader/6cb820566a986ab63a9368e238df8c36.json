@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { connect } from 'react-redux';\nimport MapOptions from './google_map_controlled';\nexport default connect()(MapOptions);","map":null,"metadata":{},"sourceType":"module"}
