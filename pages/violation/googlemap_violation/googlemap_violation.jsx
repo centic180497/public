@@ -14,14 +14,12 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import image from "../../../public/assets/violation.jpg";
 import img from "../../../public/assets/img.jpg";
-import img2 from '../../../public/assets/doxechanle.jpg'
+import img2 from "../../../public/assets/doxechanle.jpg";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Table from "@material-ui/core/Table";
 import { TableHead, TableRow, TableCell, Checkbox } from "@material-ui/core";
 import Lightbox from "react-image-lightbox";
-
-
 
 function MapViolation(props) {
   // console.log(ref);
@@ -75,39 +73,38 @@ function MapViolation(props) {
         { lat: 16.0621866873228, lng: 108.17953296270755 },
       ],
     },
-    // {
-    //   path: [
-    //     { lat: 16.081238661120885, lng: 108.16631503668216 },
-    //     { lat: 16.073486130125332, lng: 108.18519778814701 },
-    //   ],
-    //   lat: "16.077707",
-    //   lng: "108.223231",
-    //   image: "",
-    //   vehicle: "43A-11493",
-    //   type: "Dừng xe nơi cấm dừng cấm đỗ",      path: [
-    //   { lat: 16.081238661120793, lng: 108.16631503668244 },
-    //   { lat: 16.073486130125332, lng: 108.18519778814701 },
-    // ],
-    //   date: "31/10/2020",
-    //   stress: "Đường Trần phú,Quận hải châu",
-    //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    //   typeVehicle: "Ô tô",
-    // },
-    // {
-    //   path: [
-    //     { lat: 16.06573329687323, lng: 108.20253558721927 },
-    //     { lat: 16.054845829552328, lng: 108.20845790472416 },
-    //   ],
-    //   lat: "16.081844",
-    //   lng: "108.222743",
-    //   image: "",
-    //   vehicle: "43A-11494",
-    //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    //   date: "31/10/2020",
-    //   stress: "Đường Trần phú,Quận hải châu",
-    //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    //   typeVehicle: "Ô tô",
-    // },
+    {
+      id: "3",
+      path: [
+        { lat: 16.081238661120885, lng: 108.16631503668216 },
+        { lat: 16.073486130125332, lng: 108.18519778814701 },
+      ],
+      lat: "16.077707",
+      lng: "108.223231",
+      image: "",
+      vehicle: "43A-11493",
+      type: "Dừng xe nơi cấm dừng cấm đỗ",
+      date: "31/10/2020",
+      stress: "Đường Trần phú,Quận hải châu",
+      Processingunit: "Sở giao thông vận tải đà nẵng",
+      typeVehicle: "Ô tô",
+    },
+    {
+      id: "4",
+      path: [
+        { lat: 16.06573329687323, lng: 108.20253558721927 },
+        { lat: 16.054845829552328, lng: 108.20845790472416 },
+      ],
+      lat: "16.081844",
+      lng: "108.222743",
+      image: "",
+      vehicle: "43A-11494",
+      type: "Dừng xe nơi cấm dừng cấm đỗ",
+      date: "31/10/2020",
+      stress: "Đường Trần phú,Quận hải châu",
+      Processingunit: "Sở giao thông vận tải đà nẵng",
+      typeVehicle: "Ô tô",
+    },
     // {
     //   path: [
     //     { lat: 16.066145689229703, lng: 108.18494029608158 },
@@ -127,21 +124,17 @@ function MapViolation(props) {
   const [map, setMap] = useState(null);
   const shapeRef = useRef(null);
   const [infoWindowShape, setInfoWindowShape] = useState(null);
+  const [opacity, setOpacity] = useState(0);
   const [openImage, setOpenImage] = useState(false);
   const [opendialog, setOpendialog] = useState(false);
-  const[photoIndex,setPhotoIndex]=useState(0)
+  const [photoIndex, setPhotoIndex] = useState(0);
   const images = [
-    ' //khds.onecmscdn.com/2019/11/27/do-xe-chan-le.jpg ' ,
-    ' //img1.oto.com.vn/resize/400x9999/2020/05/06/xkjJIVY5/o-to-do-tren-via-he-sai-quy-dinh-oto-com-vn-f25f.jpg ' ,
-    ' //luatannam.vn/wp-content/uploads/2017/10/muc-phat-xe-o-to-tai-noi-cam-dung-va-khong-mang-dang-ky-xe.jpg ' ,
+    " //khds.onecmscdn.com/2019/11/27/do-xe-chan-le.jpg ",
+    " //img1.oto.com.vn/resize/400x9999/2020/05/06/xkjJIVY5/o-to-do-tren-via-he-sai-quy-dinh-oto-com-vn-f25f.jpg ",
+    " //luatannam.vn/wp-content/uploads/2017/10/muc-phat-xe-o-to-tai-noi-cam-dung-va-khong-mang-dang-ky-xe.jpg ",
   ];
-
-  // console.log(props.Infowindow);
-
   useEffect(() => {
     let value = vehicle.filter((data) => data.id === props.Infowindow.id);
-    // console.log("value",value);
-
     if (value.length) {
       let e = { ...value[0] };
       if (e.path.length % 2 !== 0) {
@@ -174,12 +167,9 @@ function MapViolation(props) {
   };
   const handleClose = () => {
     setOpendialog(false);
-
   };
   const next = () => {
-    
     ref.current.slickPrev();
-    // console.log("ref,ref", ref);
   };
   const prev = () => {
     ref.current.slickNext();
@@ -187,12 +177,7 @@ function MapViolation(props) {
   const showImage = () => {
     setOpenImage(true);
   };
-  const [opacity, setOpacity] = useState(0);
-  // console.log(opacity);
-
   const showInfoWindowShape = (e) => {
-    console.log(e);
-    
     clearInfoWindow();
     const settings = {
       dots: true,
@@ -203,7 +188,6 @@ function MapViolation(props) {
       <React.Fragment>
         <div
           onMouseOver={() => {
-            // console.log("vaoffafaf");
             setOpacity(1);
           }}
           onMouseOut={() => {
@@ -212,19 +196,19 @@ function MapViolation(props) {
           className={classes.slidercontent}
           id="slider"
         >
-          <Slider {...settings} className={classes.slider} ref={ref} >
-            <div  onClick={() => showImage()}>
+          <Slider {...settings} className={classes.slider} ref={ref}>
+            <div onClick={() => showImage()}>
               <img className={classes.imgpopup} src={image}></img>
             </div>
-            <div  onClick={() => showImage()}>
+            <div onClick={() => showImage()}>
               <img className={classes.imgpopup} src={img}></img>
             </div>
-            <div  onClick={() => showImage()}>
+            <div onClick={() => showImage()}>
               <img className={classes.imgpopup} src={img2}></img>
             </div>
           </Slider>
           <div className={classes.slidebutton}>
-            <div className={classes.next} onClick={(e) => next(e)}>
+            <div className={classes.next} onClick={() => next()}>
               <NavigateBeforeIcon className={classes.iconbutton} />
             </div>
             <div className={classes.prev} onClick={() => prev()}>
@@ -234,24 +218,20 @@ function MapViolation(props) {
         </div>
       </React.Fragment>
     );
-    const button = (
-      <React.Fragment>
-        <div
-          //   className={classes.infotitlepopup}
-          onClick={() => dialogtable()}
-          id="button"
-        >
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.infotitlepopup}
-          >
-            chi tiết <SendIcon className={classes.icon} />
-          </Button>
-        </div>
-      </React.Fragment>
-    );
-    const Popup = <CustomInfoWindow info={e}/>;
+    // const button = (
+    //   <React.Fragment>
+    //     <div onClick={() => dialogtable()} id="button">
+    //       <Button
+    //         variant="outlined"
+    //         color="primary"
+    //         className={classes.infotitlepopup}
+    //       >
+    //         chi tiết <SendIcon className={classes.icon} />
+    //       </Button>
+    //     </div>
+    //   </React.Fragment>
+    // );
+    const Popup = <CustomInfoWindow info={e} />;
     let infoWindow = new window.google.maps.InfoWindow({
       content: ``,
     });
@@ -270,12 +250,12 @@ function MapViolation(props) {
           // document.getElementById("button")
         );
       });
-      window.google.maps.event.addListener(infoWindow, "domready", function () {
-        ReactDOM.render(
-          React.Children.only(button),
-          document.getElementById("button")
-        );
-      });
+      // window.google.maps.event.addListener(infoWindow, "domready", function () {
+      //   ReactDOM.render(
+      //     React.Children.only(button),
+      //     document.getElementById("button")
+      //   );
+      // });
       setInfoWindowShape(infoWindow);
     }
   };
@@ -288,9 +268,9 @@ function MapViolation(props) {
     }
   };
   const onChangeMapClick = () => {
-    clearInfoWindow()
-    props.clearInfowindow()
-}
+    clearInfoWindow();
+    props.clearInfowindow();
+  };
 
   return (
     <MapOptions>
@@ -309,10 +289,7 @@ function MapViolation(props) {
                   key={index}
                   id={marker.id}
                   // ref={ref}
-                  options={{
-                    strokeColor:'red'
-                }}
-                  handleClose={()=>handleClose()}
+                  handleClose={() => handleClose()}
                   opendialog={opendialog}
                   shapeRef={shapeRef}
                 />
@@ -326,26 +303,21 @@ function MapViolation(props) {
               );
             })
           : null}
-          {
-          openImage?(
-            <Lightbox
+        {openImage ? (
+          <Lightbox
             mainSrc={images[photoIndex]}
             nextSrc={images[(photoIndex + 1) % images.length]}
             prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-            onCloseRequest={() => (setOpenImage(false))}
+            onCloseRequest={() => setOpenImage(false)}
             onMovePrevRequest={() =>
-            
-                setPhotoIndex((photoIndex + images.length - 1) % images.length)
-              }
+              setPhotoIndex((photoIndex + images.length - 1) % images.length)
+            }
             onMoveNextRequest={() =>
-         
-                setPhotoIndex((photoIndex + 1) % images.length)
-              }
+              setPhotoIndex((photoIndex + 1) % images.length)
+            }
           />
-          ):null
-      }
+        ) : null}
       </GoogleMap>
-     
     </MapOptions>
   );
 }
@@ -375,7 +347,7 @@ const useStyles = makeStyles(() => ({
     // },
   },
   imgpopup: {
-    cursor:'pointer',
+    cursor: "pointer",
     width: "450px",
     height: 300,
   },

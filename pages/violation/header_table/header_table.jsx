@@ -16,15 +16,6 @@ import LogoData from "../../../public/assets/edit.gif";
 function HeaderTable(props) {
   const classes = useStyles();
   const { listViolation, updateSelectViolation, violationSelected } = props;
-
-  // const handleSelectAllClick = (e) => {
-  //     if (e.target.checked) {
-  //         const newSelected = listViolation && listViolation.map((n) => n.id)
-  //         updateSelectViolation(newSelected)
-  //         return
-  //     }
-  //     updateSelectViolation([])
-  // }
   const { data } = useDemoData({
     dataSet: "Commodity",
     rowLength: 100,
@@ -59,21 +50,14 @@ function HeaderTable(props) {
       Processingunit: "Sở giao thông vận tải đà nẵng",
       path: [
         { lat: 16.07274532559629, lng: 108.20999447459961 },
-
         { lat: 16.072785919075752, lng: 108.21019195223833 },
         { lat: 16.072844398302305, lng: 108.21046420748551 },
-
         { lat: 16.072906577169032, lng: 108.2107622679623 },
         { lat: 16.072962956953667, lng: 108.21102914775928 },
-
         { lat: 16.0730054834092, lng: 108.2112279665025 },
-
         { lat: 16.07305090938575, lng: 108.21144723708947 },
-
         { lat: 16.07311212167817, lng: 108.21175133253654 },
-
         { lat: 16.073168179234703, lng: 108.21201653595288 },
-
         { lat: 16.07322359243598, lng: 108.2122901212724 },
         { lat: 16.073295436272762, lng: 108.21267099495252 },
         { lat: 16.07333345228353, lng: 108.2128667962106 },
@@ -88,9 +72,14 @@ function HeaderTable(props) {
       ],
     },
     // {
+    //   id:'3',
+    //   path: [
+    //     { lat: 16.081238661120885, lng: 108.16631503668216 },
+    //     { lat: 16.073486130125332, lng: 108.18519778814701 },
+    //   ],
     //   lat: "16.077707",
     //   lng: "108.223231",
-    //   image: "",
+    //   image: img2,
     //   vehicle: "43A-11493",
     //   type: "Dừng xe nơi cấm dừng cấm đỗ",
     //   date: "31/10/2020",
@@ -99,9 +88,14 @@ function HeaderTable(props) {
     //   typeVehicle: "Ô tô",
     // },
     // {
+    //   id:'4',
+    //   path: [
+    //     { lat: 16.06573329687323, lng: 108.20253558721927 },
+    //     { lat: 16.054845829552328, lng: 108.20845790472416 },
+    //   ],
     //   lat: "16.081844",
     //   lng: "108.222743",
-    //   image: "",
+    //   image: img,
     //   vehicle: "43A-11494",
     //   type: "Dừng xe nơi cấm dừng cấm đỗ",
     //   date: "31/10/2020",
@@ -109,61 +103,6 @@ function HeaderTable(props) {
     //   Processingunit: "Sở giao thông vận tải đà nẵng",
     //   typeVehicle: "Ô tô",
     // },
-    // {
-    //   lat: "16.074250",
-    //   lng: "108.223653",
-    //   image: "",
-    //   vehicle: "43A-11495",
-    //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    //   date: "31/10/2020",
-    //   stress: "Đường Trần phú,Quận hải châu",
-    //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    //   typeVehicle: "Ô tô",
-    // },
-    // // {
-    // //   lat: "16.074252",
-    // //   lng: "108.223653",
-    // //   image: "",
-    // //   vehicle: "43A-11496",
-    // //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    // //   date: "31/10/2020",
-    // //   stress: "Đường Trần phú,Quận hải châu",
-    // //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    // //   typeVehicle: "Ô tô",
-    // // },
-    // // {
-    // //   lat: "16.074253",
-    // //   lng: "108.223653",
-    // //   image: "",
-    // //   vehicle: "43A-11497",
-    // //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    // //   date: "31/10/2020",
-    // //   stress: "Đường Trần phú,Quận hải châu",
-    // //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    // //   typeVehicle: "Ô tô",
-    // // },
-    // // {
-    // //   lat: "16.074254",
-    // //   lng: "108.223653",
-    // //   image: "",
-    // //   vehicle: "43A-11498",
-    // //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    // //   date: "31/10/2020",
-    // //   stress: "Đường Trần phú,Quận hải châu",
-    // //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    // //   typeVehicle: "Ô tô",
-    // // },
-    // // {
-    // //   lat: "16.074255",
-    // //   lng: "108.223653",
-    // //   image: "",
-    // //   vehicle: "43A-11499",
-    // //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    // //   date: "31/10/2020",
-    // //   stress: "Đường Trần phú,Quận hải châu",
-    // //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    // //   typeVehicle: "Ô tô",
-    // // },
   ];
   const itemActive = (e, historyRow) => {
     props.showInfowindow(historyRow);
@@ -172,7 +111,7 @@ function HeaderTable(props) {
   return (
     <>
       <div
-        className="table-wrapper"
+        className={classes.tableWraper}
         style={{
           flex: 1,
           overflowY: "scroll",
@@ -184,9 +123,7 @@ function HeaderTable(props) {
               <TableCell align="center"> Ảnh </TableCell>
               <TableCell align="center"> Biển số </TableCell>
               <TableCell align="center">Lỗi vi phạm </TableCell>
-              {/* <TableCell align="center"> Ngày vi phạm </TableCell> */}
               <TableCell align="center"> Tuyến đường vi phạm </TableCell>
-              {/* <TableCell align="center"> Loại Phương Tiện </TableCell> */}
             </TableRow>
           </TableHead>
           {vehicle.length ? (
@@ -230,14 +167,11 @@ function HeaderTable(props) {
                       {historyRow.date}
                     </Typography>
                   </TableCell>
-                  {/* <TableCell align="center">{historyRow.date}</TableCell> */}
                   <TableCell align="center">
                     <Typography className={classes.font}>
                       {historyRow.stress}
                     </Typography>
                   </TableCell>
-                  {/* <TableCell align="center">{historyRow.Processingunit}</TableCell> */}
-                  {/* <TableCell align="center">{historyRow.typeVehicle}</TableCell> */}
                 </TableRow>
               </TableBody>
             ))
@@ -267,6 +201,16 @@ export default HeaderTable;
 const useStyles = makeStyles((theme) => ({
   table: {
     width: "100%",
+    [theme.breakpoints.down('sm')]: {
+      // backgroundColor: 'red',
+      width:'80%'
+    },
+  },
+  tableWraper:{
+    overflowX:"auto",
+    '@media(minWidth: 780px)' : {
+      width: '80%'
+    }
   },
   pagination: {
     width: "100%",

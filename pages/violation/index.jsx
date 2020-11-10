@@ -33,7 +33,11 @@ const useStyles = makeStyles((theme) => ({
   HeaderTable1: {
     display: 'flex',
     flex: '1 1 auto',
-    height:" calc(100vh - 70px)"
+    height:" calc(100vh - 70px)",
+    [theme.breakpoints.down('sm')]: {
+      // backgroundColor: 'red',
+      height:" calc(100vh - 70px)",
+    },
   },
   HeaderTable: {
     width: "45%",
@@ -43,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
   map: {
     height: "auto",
-    flex: '1 1 auto'
+    flex: '1 1 auto',
+    // [theme.breakpoints.down('sm')]: {
+    //   // backgroundColor: 'red',
+    //   order:-1
+    // },
   }
 }))
