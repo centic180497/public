@@ -201,16 +201,13 @@ export default HeaderTable;
 const useStyles = makeStyles((theme) => ({
   table: {
     width: "100%",
-    [theme.breakpoints.down('sm')]: {
-      // backgroundColor: 'red',
-      width:'80%'
-    },
+    // [theme.breakpoints.down('sm')]: {
+    //   // backgroundColor: 'red',
+    //   width:'80%'
+    // },
   },
   tableWraper:{
     overflowX:"auto",
-    '@media(minWidth: 780px)' : {
-      width: '80%'
-    }
   },
   pagination: {
     width: "100%",

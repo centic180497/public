@@ -34,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: '1 1 auto',
     height:" calc(100vh - 70px)",
-    [theme.breakpoints.down('sm')]: {
-      // backgroundColor: 'red',
-      height:" calc(100vh - 70px)",
+    [theme.breakpoints.down('sm','xs')]: {
+      flexDirection:'column',
+      flex:1
     },
   },
   HeaderTable: {
@@ -44,13 +44,20 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 10,
     display: "flex",
     flexDirection: "column",
+    [theme.breakpoints.down('sm','xs')]: {
+      width:'100%',
+      display:'flex',
+      paddingLeft:10,
+      flexDirection:'column'
+    },
   },
   map: {
     height: "auto",
     flex: '1 1 auto',
-    // [theme.breakpoints.down('sm')]: {
-    //   // backgroundColor: 'red',
-    //   order:-1
-    // },
+    [theme.breakpoints.down('sm','xs')]: {
+      width:'100%',
+      order:-1,
+      height:500
+    },
   }
 }))
