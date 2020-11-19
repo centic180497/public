@@ -9,6 +9,7 @@ export default class Client {
     url = 'http://103.101.76.162:9002'
     urlPolitical = 'http://103.101.76.162:9002'
     urlVersion = '/api/v1'
+    urlSearchViolations='http://103.101.76.162:9005'
     defaultHeaders: { [x: string]: string } = {}
     userId = ''
     userRole?: string
@@ -48,7 +49,11 @@ export default class Client {
     getBaseRoutePolitical() {
         return `${this.urlPolitical}${this.urlVersion}`
     }
-
+    //searchViolation
+    getBaseRouteSearchViolation(){
+        return `${this.urlSearchViolations}${this.urlVersion}`
+    }
+    //endsearch
     getUsersRoute() {
         return `${this.getBaseRoute()}/users`
     }
@@ -72,7 +77,7 @@ export default class Client {
     getOptions(options: Options) {
 
         const newOptions = { ...options }
-        let headers = { ...this.defaultHeaders }
+        let headers = { ...this.defaultHeaders } 
 
         if (options.headers) {
             headers = { ...headers, ...options.headers }
@@ -88,7 +93,13 @@ export default class Client {
     login = (username: string, password: string) => {}
 
     logout = () => {}
-
+    //searchViolation
+    getSearchViolation=async(plate:string)=>{
+        const {data}=await this.doFetchWithResponse(`${this.getBaseRouteSearchViolation()}/violations/search`,{method:'post',data:{plate}})
+        console.log(data);
+        return data
+    }
+    ///endSearch
     getProvinces = async () => {
         const { data } = await this.doFetchWithResponse(`${this.getPolitical()}/provinces`, { method: 'get', data: {} })
         return data
@@ -116,6 +127,7 @@ export default class Client {
     }
 
     addOneNoParking = async (payload: object) => {
+        
         const { data } = await this.doFetchWithResponse(`${this.getNoParkingRoute()}`, { method: 'post', data: { ...payload } })
         return data
     }

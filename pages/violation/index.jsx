@@ -4,9 +4,13 @@ import ManageNavbar from '../../components/header/index'
 import HeaderTable from './header_table'
 import SearchTable from './search_violation'
 import MapViolation from './googlemap_violation'
+
+
+
 export default function Violation(props) {
   const classes = useStyles();
-  return (
+  
+  return ( 
     <div style={{height:'100vh'}}>
       <div>
         <ManageNavbar />

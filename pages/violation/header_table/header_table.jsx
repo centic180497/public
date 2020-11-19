@@ -71,43 +71,13 @@ function HeaderTable(props) {
         { lat: 16.073617527083105, lng: 108.21430777213503 },
       ],
     },
-    // {
-    //   id:'3',
-    //   path: [
-    //     { lat: 16.081238661120885, lng: 108.16631503668216 },
-    //     { lat: 16.073486130125332, lng: 108.18519778814701 },
-    //   ],
-    //   lat: "16.077707",
-    //   lng: "108.223231",
-    //   image: img2,
-    //   vehicle: "43A-11493",
-    //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    //   date: "31/10/2020",
-    //   stress: "Đường Trần phú,Quận hải châu",
-    //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    //   typeVehicle: "Ô tô",
-    // },
-    // {
-    //   id:'4',
-    //   path: [
-    //     { lat: 16.06573329687323, lng: 108.20253558721927 },
-    //     { lat: 16.054845829552328, lng: 108.20845790472416 },
-    //   ],
-    //   lat: "16.081844",
-    //   lng: "108.222743",
-    //   image: img,
-    //   vehicle: "43A-11494",
-    //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    //   date: "31/10/2020",
-    //   stress: "Đường Trần phú,Quận hải châu",
-    //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    //   typeVehicle: "Ô tô",
-    // },
   ];
   const itemActive = (e, historyRow) => {
     props.showInfowindow(historyRow);
   };
-
+  const onChangePagination=(e,page)=>{
+    props.getSearchViolation(page)
+  }
   return (
     <>
       <div
@@ -120,14 +90,14 @@ function HeaderTable(props) {
         <Table stickyHeader className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"> Ảnh </TableCell>
-              <TableCell align="center"> Biển số </TableCell>
-              <TableCell align="center">Lỗi vi phạm </TableCell>
-              <TableCell align="center"> Tuyến đường vi phạm </TableCell>
+              <TableCell align="center"><Typography className={classes.tabletitle}> Ảnh </Typography></TableCell>
+              <TableCell align="center"> <Typography className={classes.tabletitle}> Biển số </Typography></TableCell>
+              <TableCell align="center"><Typography className={classes.tabletitle}>Lỗi vi phạm </Typography></TableCell>
+              <TableCell align="center"> <Typography className={classes.tabletitle}>Tuyến đường vi phạm </Typography></TableCell>
             </TableRow>
           </TableHead>
-          {vehicle.length ? (
-            vehicle.map((historyRow) => (
+          {props.vehicle.data?.length ? (
+            props.vehicle.data.map((historyRow) => (
               <TableBody>
                 <TableRow
                   onClick={(e) => itemActive(e, historyRow)}
@@ -139,12 +109,12 @@ function HeaderTable(props) {
                 >
                   <TableCell align="center" className={classes.tablecell}>
                     <img
-                      src={historyRow.image}
+                      src={historyRow.avatar}
                       className={classes.imagepopup}
                     ></img>
                   </TableCell>
                   <TableCell align="left">
-                    <b className={classes.font}>{historyRow.vehicle}</b>
+                    <b className={classes.font}>{historyRow.numberPlate}</b>
 
                     <Typography
                       variant="body1"
@@ -152,7 +122,7 @@ function HeaderTable(props) {
                       className={classes.colorfont}
                     >
                       {" "}
-                      {historyRow.typeVehicle}
+                      {historyRow.vehicleType}
                     </Typography>
                   </TableCell>
                   <TableCell align="left">
@@ -169,7 +139,7 @@ function HeaderTable(props) {
                   </TableCell>
                   <TableCell align="center">
                     <Typography className={classes.font}>
-                      {historyRow.stress}
+                      {historyRow.address}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -183,15 +153,17 @@ function HeaderTable(props) {
           )}
         </Table>
       </div>
-      <div className={classes.pagination}>
-        <Pagination
-          count={100000}
-          showFirstButton
-          showLastButton
-          // onChange={onChange}
-          siblingCount={1}
-        />
-      </div>
+      {props.vehicle.data?.length ?(
+         <div className={classes.pagination}>
+         <Pagination
+           count={5}
+           showFirstButton
+           showLastButton
+           onChange={(e,page)=>onChangePagination(e,page)}
+           siblingCount={1}
+         />
+       </div>
+      ):null}
     </>
   );
 }
@@ -222,6 +194,10 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     // marginBottom: 5,
   },
+  tabletitle:{
+    fontFamily: "Nunito, sans-serif",
+    fontSize: 16,
+  },
   untablerow: {
     cursor: "pointer",
   },
@@ -231,7 +207,7 @@ const useStyles = makeStyles((theme) => ({
   },
   font: {
     fontFamily: "Nunito, sans-serif",
-    fontSize: 16,
+    // fontSize: 16,
   },
   colorfont: {
     fontSize: 14,

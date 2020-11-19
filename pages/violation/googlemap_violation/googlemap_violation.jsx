@@ -19,12 +19,77 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Table from "@material-ui/core/Table";
 import { TableHead, TableRow, TableCell, Checkbox } from "@material-ui/core";
-import Lightbox from "react-image-lightbox";
+// import Lightbox from "react-image-lightbox";
+import {
+  LightgalleryProvider,
+  LightgalleryItem,
+  withLightgallery,
+  useLightgallery,
+} from "react-lightgallery";
+
+const OpenButtonWithHook = (props) => {
+  const classes = useStyles();
+  const ref = useRef({});
+  const settings = {
+    dots: true,
+    speed: 500,
+    slidesToShow: 1,
+  };
+  const next = () => {
+    ref.current.slickPrev();
+  };
+  const prev = () => {
+    ref.current.slickNext();
+  };
+
+  const { openGallery } = useLightgallery();
+  return (
+    <>
+      <Slider {...settings} className={classes.slider} ref={ref}>
+        <div>
+          <img
+            className={classes.imgpopup}
+            src={image}
+            {...props}
+            onClick={() => openGallery("item1")}
+          ></img>
+        </div>
+        <div>
+          <img
+            className={classes.imgpopup}
+            src={img}
+            {...props}
+            onClick={() => openGallery("item1")}
+          ></img>
+        </div>
+        <div>
+          <img
+            className={classes.imgpopup}
+            src={img2}
+            {...props}
+            onClick={() => openGallery("item1")}
+          ></img>
+        </div>
+        {/* <OpenGallery222 classes={classes.imgpopup} image={image} /> */}
+      </Slider>
+      <div className={classes.slidebutton}>
+        <div className={classes.next} onClick={() => next()}>
+          <NavigateBeforeIcon className={classes.iconbutton} />
+        </div>
+        <div className={classes.prev} onClick={() => prev()}>
+          <NavigateNextIcon className={classes.iconbutton} />
+        </div>
+      </div>
+    </>
+  );
+};
 
 function MapViolation(props) {
   // console.log(ref);
+  // const { openGallery } = useLightgallery();
   const ref = useRef({});
-  // console.log(ref);
+  const lightbox = useRef();
+  console.log(lightbox, "lightboxlightbox");
 
   const classes = useStyles();
 
@@ -125,14 +190,18 @@ function MapViolation(props) {
   const shapeRef = useRef(null);
   const [infoWindowShape, setInfoWindowShape] = useState(null);
   const [opacity, setOpacity] = useState(0);
-  const [openImage, setOpenImage] = useState(false);
+  const [openImage, setOpenImage] = useState(true);
   const [opendialog, setOpendialog] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
+  // const { openGallery } = useLightgallery()
+
   const images = [
-    " //khds.onecmscdn.com/2019/11/27/do-xe-chan-le.jpg ",
-    " //img1.oto.com.vn/resize/400x9999/2020/05/06/xkjJIVY5/o-to-do-tren-via-he-sai-quy-dinh-oto-com-vn-f25f.jpg ",
-    " //luatannam.vn/wp-content/uploads/2017/10/muc-phat-xe-o-to-tai-noi-cam-dung-va-khong-mang-dang-ky-xe.jpg ",
+    "https://images.unsplash.com/photo-1594818898109-44704fb548f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1594818896795-35ad7bcf3c6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1594818896744-57eca4d47b07?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+    "https://images.unsplash.com/photo-1594818897077-aec41f55241f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80",
   ];
+
   useEffect(() => {
     let value = vehicle.filter((data) => data.id === props.Infowindow.id);
     if (value.length) {
@@ -159,7 +228,7 @@ function MapViolation(props) {
       showInfoWindowShape(e);
     }
   }, [props.Infowindow]);
-
+  // const { openGallery } = useLightgallery();
   const clearInfoWindow = () => {
     if (infoWindowShape) {
       infoWindowShape.open(null);
@@ -168,15 +237,13 @@ function MapViolation(props) {
   const handleClose = () => {
     setOpendialog(false);
   };
-  const next = () => {
-    ref.current.slickPrev();
-  };
-  const prev = () => {
-    ref.current.slickNext();
-  };
-  const showImage = () => {
-    setOpenImage(true);
-  };
+  // const next = () => {
+  //   ref.current.slickPrev();
+  // };
+  // const prev = () => {
+  //   ref.current.slickNext();
+  // };
+
   const showInfoWindowShape = (e) => {
     clearInfoWindow();
     const settings = {
@@ -184,38 +251,38 @@ function MapViolation(props) {
       speed: 500,
       slidesToShow: 1,
     };
+    // const { openGallery } = useLightgallery();
+    // const { openGallery } = useLightgallery();
     const slide = (
       <React.Fragment>
-        <div
-          onMouseOver={() => {
-            setOpacity(1);
-          }}
-          onMouseOut={() => {
-            setOpacity(0);
-          }}
-          className={classes.slidercontent}
-          id="slider"
-        >
-          <Slider {...settings} className={classes.slider} ref={ref}>
-            <div onClick={() => showImage()}>
-              <img className={classes.imgpopup} src={image}></img>
+        <LightgalleryProvider>
+          {images.map((item) => (
+            // <LightgalleryItem image={item}></LightgalleryItem>
+            <div
+              styles={{
+                maxWidth: "250px",
+                width: "100px",
+                padding: "5px",
+              }}
+            >
+              <LightgalleryItem group="item1" src={item}>
+                {/* <img src={item} style={{ width: "100%" }} /> */}
+              </LightgalleryItem>
             </div>
-            <div onClick={() => showImage()}>
-              <img className={classes.imgpopup} src={img}></img>
-            </div>
-            <div onClick={() => showImage()}>
-              <img className={classes.imgpopup} src={img2}></img>
-            </div>
-          </Slider>
-          <div className={classes.slidebutton}>
-            <div className={classes.next} onClick={() => next()}>
-              <NavigateBeforeIcon className={classes.iconbutton} />
-            </div>
-            <div className={classes.prev} onClick={() => prev()}>
-              <NavigateNextIcon className={classes.iconbutton} />
-            </div>
+          ))}
+          <div
+            onMouseOver={() => {
+              setOpacity(1);
+            }}
+            onMouseOut={() => {
+              setOpacity(0);
+            }}
+            className={classes.slidercontent}
+            id="slider"
+          >
+            <OpenButtonWithHook />
           </div>
-        </div>
+        </LightgalleryProvider>
       </React.Fragment>
     );
     // const button = (
@@ -303,20 +370,6 @@ function MapViolation(props) {
               );
             })
           : null}
-        {openImage ? (
-          <Lightbox
-            mainSrc={images[photoIndex]}
-            nextSrc={images[(photoIndex + 1) % images.length]}
-            prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-            onCloseRequest={() => setOpenImage(false)}
-            onMovePrevRequest={() =>
-              setPhotoIndex((photoIndex + images.length - 1) % images.length)
-            }
-            onMoveNextRequest={() =>
-              setPhotoIndex((photoIndex + 1) % images.length)
-            }
-          />
-        ) : null}
       </GoogleMap>
     </MapOptions>
   );

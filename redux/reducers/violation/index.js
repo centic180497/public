@@ -1,5 +1,9 @@
-import * as types from "../../action_types/search_violation";
+import {SearchViolation} from "../../action_types";
+import api from './api'
+import { combineReducers } from "redux";
 const INITIAL_STATE = {
+  Violation:[],
+  loading:false,
   showInfowindow: {
     id: null,
     info: null,
@@ -7,7 +11,7 @@ const INITIAL_STATE = {
 };
 const reducer_search_violation = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case types.SHOW_INFOWINDOW_VIOLATION:
+    case SearchViolation.SHOW_INFOWINDOW_VIOLATION:
       return {
         ...state,
         showInfowindow: {
@@ -15,15 +19,21 @@ const reducer_search_violation = (state = INITIAL_STATE, action) => {
           info: action.payload,
         },
       };
-    case types.CLEAR_INFOWINDOW_VIOLATION:
+    case SearchViolation.CLEAR_INFOWINDOW_VIOLATION:
       return {
         ...state,
         showInfowindow: {
           id: null,
+          info: null,
         },
       };
+    case SearchViolation.GET_SEARCH_VIOLATION_SUCCESS:
+      return{
+        ...state,
+        Violation:action.payload
+      }
     default:
       return state;
   }
 };
-export default reducer_search_violation;
+export default combineReducers({api,reducer_search_violation});

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Button, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 // import SendIcon from '@material-ui/icons/Send';
@@ -8,6 +8,20 @@ function SearchTable(props) {
   const classes = useStyles();
   const vehicle = [{ name: "Xe máy" }, { name: "Ô tô" }];
   const vehicle1 = [{ name: "Trần Phú" }, { name: "Bạch Đằng" }];
+  const [handleInput, setHandleInput] = useState('');
+  const hanleInputChange = (e) => {
+    // console.log(e);
+    setHandleInput(e.target.value);
+  };
+  const clickSearch = () => {
+    props.getSearchViolation(handleInput);
+  };
+  const handleEnter = (e) => {
+    // console.log(e,"eeeee");
+    if (e.key === "Enter") {
+      props.getSearchViolation(handleInput);
+    }
+  };
   return (
     <div className={classes.search}>
       <div className={classes.searchText}>
@@ -17,16 +31,18 @@ function SearchTable(props) {
           variant="outlined"
           label="Nhập biển số"
           className={classes.bodertext}
+          onChange={(e) => hanleInputChange(e)}
+          onKeyDown={(e) => handleEnter(e)}
         />
         <Button
           variant="outlined"
+          onClick={() => clickSearch()}
           // color="primary"
           className={classes.infotitlepopup}
         >
           <SearchSharpIcon className={classes.icon} />
         </Button>
       </div>
-      
     </div>
   );
 }
