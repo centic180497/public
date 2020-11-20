@@ -29,3 +29,14 @@ export function getSearchViolationFailure(err){
         err
     }
 }
+export function getDataInputSearch(data){
+    return{
+        type:SearchViolation.DATA_INPUT_SEARCH,
+        payload:data
+    }
+}
+export function ClearDataInputSearch(){
+    return{
+        type:SearchViolation.CLEAR_DATA_SEARCH,
+    }
+}

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import MapOptions from "../../../components/google_map_controlled";
 import { makeStyles } from "@material-ui/core/styles";
-// import MarkerComponent from "./marker";
+import MarkerComponent from "../googlemap_violation/marker";
 import ReactDOM from "react-dom";
 import { GoogleMap, InfoWindow } from "react-google-maps";
 import ShapeNoparking from "../googlemap_violation/marker";
@@ -85,11 +85,8 @@ const OpenButtonWithHook = (props) => {
 };
 
 function MapViolation(props) {
-  // console.log(ref);
-  // const { openGallery } = useLightgallery();
   const ref = useRef({});
   const lightbox = useRef();
-  console.log(lightbox, "lightboxlightbox");
 
   const classes = useStyles();
 
@@ -187,56 +184,43 @@ function MapViolation(props) {
     // },
   ];
   const [map, setMap] = useState(null);
-  const shapeRef = useRef(null);
   const [infoWindowShape, setInfoWindowShape] = useState(null);
   const [opacity, setOpacity] = useState(0);
-  const [openImage, setOpenImage] = useState(true);
-  const [opendialog, setOpendialog] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
-  // const { openGallery } = useLightgallery()
+  // useEffect(() => {
+  //   let value = vehicle.filter((data) => data.id === props.Infowindow.id);
+  //   if (value.length) {
+  //     let e = { ...value[0] };
+  //     if (e.path.length % 2 !== 0) {
+  //       let index = Math.ceil(e.path.length / 2);
+  //       e.latLng = e.path[index];
+  //     } else {
+  //       let pointFirst;
+  //       let pointLast;
+  //       if (e.path.length < 3) {
+  //         pointFirst = e.path[0];
+  //         pointLast = e.path[1];
+  //       } else {
+  //         let i = e.path.length / 2;
+  //         pointFirst = e.path[i];
+  //         pointLast = e.path[i + 1];
+  //       }
+  //       let lat = (pointFirst.lat + pointLast.lat) / 2;
+  //       let lng = (pointFirst.lng + pointLast.lng) / 2;
 
-  const images = [
-    "https://images.unsplash.com/photo-1594818898109-44704fb548f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1594818896795-35ad7bcf3c6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1594818896744-57eca4d47b07?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-    "https://images.unsplash.com/photo-1594818897077-aec41f55241f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80",
-  ];
-
-  useEffect(() => {
-    let value = vehicle.filter((data) => data.id === props.Infowindow.id);
-    if (value.length) {
-      let e = { ...value[0] };
-      if (e.path.length % 2 !== 0) {
-        let index = Math.ceil(e.path.length / 2);
-        e.latLng = e.path[index];
-      } else {
-        let pointFirst;
-        let pointLast;
-        if (e.path.length < 3) {
-          pointFirst = e.path[0];
-          pointLast = e.path[1];
-        } else {
-          let i = e.path.length / 2;
-          pointFirst = e.path[i];
-          pointLast = e.path[i + 1];
-        }
-        let lat = (pointFirst.lat + pointLast.lat) / 2;
-        let lng = (pointFirst.lng + pointLast.lng) / 2;
-
-        e.latLng = { lat, lng };
-      }
-      showInfoWindowShape(e);
-    }
-  }, [props.Infowindow]);
+  //       e.latLng = { lat, lng };
+  //     }
+  //     showInfoWindowShape(e);
+  //   }
+  // }, [props.Infowindow]);
   // const { openGallery } = useLightgallery();
-  const clearInfoWindow = () => {
-    if (infoWindowShape) {
-      infoWindowShape.open(null);
-    }
-  };
-  const handleClose = () => {
-    setOpendialog(false);
-  };
+  // const clearInfoWindow = () => {
+  //   if (infoWindowShape) {
+  //     infoWindowShape.open(null);
+  //   }
+  // };
+  // const handleClose = () => {
+  //   setOpendialog(false);
+  // };
   // const next = () => {
   //   ref.current.slickPrev();
   // };
@@ -244,98 +228,95 @@ function MapViolation(props) {
   //   ref.current.slickNext();
   // };
 
-  const showInfoWindowShape = (e) => {
-    clearInfoWindow();
-    const settings = {
-      dots: true,
-      speed: 500,
-      slidesToShow: 1,
-    };
-    // const { openGallery } = useLightgallery();
-    // const { openGallery } = useLightgallery();
-    const slide = (
-      <React.Fragment>
-        <LightgalleryProvider>
-          {images.map((item) => (
-            // <LightgalleryItem image={item}></LightgalleryItem>
-            <div
-              styles={{
-                maxWidth: "250px",
-                width: "100px",
-                padding: "5px",
-              }}
-            >
-              <LightgalleryItem group="item1" src={item}>
-                {/* <img src={item} style={{ width: "100%" }} /> */}
-              </LightgalleryItem>
-            </div>
-          ))}
-          <div
-            onMouseOver={() => {
-              setOpacity(1);
-            }}
-            onMouseOut={() => {
-              setOpacity(0);
-            }}
-            className={classes.slidercontent}
-            id="slider"
-          >
-            <OpenButtonWithHook />
-          </div>
-        </LightgalleryProvider>
-      </React.Fragment>
-    );
-    // const button = (
-    //   <React.Fragment>
-    //     <div onClick={() => dialogtable()} id="button">
-    //       <Button
-    //         variant="outlined"
-    //         color="primary"
-    //         className={classes.infotitlepopup}
-    //       >
-    //         chi tiết <SendIcon className={classes.icon} />
-    //       </Button>
-    //     </div>
-    //   </React.Fragment>
-    // );
-    const Popup = <CustomInfoWindow info={e} />;
-    let infoWindow = new window.google.maps.InfoWindow({
-      content: ``,
-    });
+  // const showInfoWindowShape = (e) => {
+  //   clearInfoWindow();
+  //   const settings = {
+  //     dots: true,
+  //     speed: 500,
+  //     slidesToShow: 1,
+  //   };
+  //   // const { openGallery } = useLightgallery();
+  //   // const { openGallery } = useLightgallery();
+  //   const slide = (
+  //     <React.Fragment>
+  //       <LightgalleryProvider>
+  //         {images.map((item) => (
+  //           // <LightgalleryItem image={item}></LightgalleryItem>
+  //           <div
+  //             styles={{
+  //               maxWidth: "250px",
+  //               width: "100px",
+  //               padding: "5px",
+  //             }}
+  //           >
+  //             <LightgalleryItem group="item1" src={item}>
+  //               {/* <img src={item} style={{ width: "100%" }} /> */}
+  //             </LightgalleryItem>
+  //           </div>
+  //         ))}
+  //         <div
+  //           onMouseOver={() => {
+  //             setOpacity(1);
+  //           }}
+  //           onMouseOut={() => {
+  //             setOpacity(0);
+  //           }}
+  //           className={classes.slidercontent}
+  //           id="slider"
+  //         >
+  //           <OpenButtonWithHook />
+  //         </div>
+  //       </LightgalleryProvider>
+  //     </React.Fragment>
+  //   );
+  //   // const button = (
+  //   //   <React.Fragment>
+  //   //     <div onClick={() => dialogtable()} id="button">
+  //   //       <Button
+  //   //         variant="outlined"
+  //   //         color="primary"
+  //   //         className={classes.infotitlepopup}
+  //   //       >
+  //   //         chi tiết <SendIcon className={classes.icon} />
+  //   //       </Button>
+  //   //     </div>
+  //   //   </React.Fragment>
+  //   // );
+  //   const Popup = <CustomInfoWindow info={e} />;
+  //   let infoWindow = new window.google.maps.InfoWindow({
+  //     content: ``,
+  //   });
 
-    if (map) {
-      let content = ReactDOMServer.renderToString(Popup);
+  //   if (map) {
+  //     let content = ReactDOMServer.renderToString(Popup);
 
-      infoWindow.setPosition(e.latLng);
-      infoWindow.setContent(content);
-      infoWindow.open(map);
+  //     infoWindow.setPosition(e.latLng);
+  //     infoWindow.setContent(content);
+  //     infoWindow.open(map);
 
-      window.google.maps.event.addListener(infoWindow, "domready", function () {
-        ReactDOM.render(
-          React.Children.only(slide),
-          document.getElementById("slide")
-          // document.getElementById("button")
-        );
-      });
-      // window.google.maps.event.addListener(infoWindow, "domready", function () {
-      //   ReactDOM.render(
-      //     React.Children.only(button),
-      //     document.getElementById("button")
-      //   );
-      // });
-      setInfoWindowShape(infoWindow);
-    }
-  };
-  const dialogtable = () => {
-    setOpendialog(true);
-  };
-  const mapEvent = (ref) => {
-    if (ref) {
-      setMap(ref.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
-    }
-  };
+  //     window.google.maps.event.addListener(infoWindow, "domready", function () {
+  //       ReactDOM.render(
+  //         React.Children.only(slide),
+  //         document.getElementById("slide")
+  //         // document.getElementById("button")
+  //       );
+  //     });
+  //     // window.google.maps.event.addListener(infoWindow, "domready", function () {
+  //     //   ReactDOM.render(
+  //     //     React.Children.only(button),
+  //     //     document.getElementById("button")
+  //     //   );
+  //     // });
+  //     setInfoWindowShape(infoWindow);
+  //   }
+  // };
+  // const mapEvent = (ref) => {
+  //   if (ref) {
+  //     setMap(ref.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
+  //   }
+  // };
   const onChangeMapClick = () => {
-    clearInfoWindow();
+    // clearInfoWindow();
     props.clearInfowindow();
   };
 
@@ -345,28 +326,29 @@ function MapViolation(props) {
         onClick={onChangeMapClick}
         zoom={13}
         defaultCenter={{ lat: 16.04319399907483, lng: 108.21515312158203 }}
-        ref={mapEvent}
+        // ref={mapEvent}
         // onClick={(e) => handleMap(e)}
       >
-        {vehicle.length
-          ? vehicle.map((marker, index) => {
+        {props.vehicle.data?.length
+          ? props.vehicle.data.map((marker, index) => {
+              // console.log(marker);
               return (
-                <ShapeNoparking
-                  marker={marker}
-                  key={index}
-                  id={marker.id}
-                  // ref={ref}
-                  handleClose={() => handleClose()}
-                  opendialog={opendialog}
-                  shapeRef={shapeRef}
-                />
-                // <MarkerComponent
+                // <ShapeNoparking
                 //   marker={marker}
                 //   key={index}
-                //   // id={marker.id}
-                //   lat={marker.lat}
-                //   lng={marker.lng}
+                //   id={marker.id}
+                //   // ref={ref}
+                //   handleClose={() => handleClose()}
+                //   opendialog={opendialog}
+                //   shapeRef={shapeRef}
                 // />
+                <MarkerComponent
+                  marker={marker}
+                  key={index}
+                  // id={marker.id}
+                  lat={marker.camera.lat}
+                  lng={marker.camera.lng}
+                />
               );
             })
           : null}

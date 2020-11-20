@@ -14,12 +14,23 @@ function SearchTable(props) {
     setHandleInput(e.target.value);
   };
   const clickSearch = () => {
-    props.getSearchViolation(handleInput);
+    if(handleInput===''){
+      props.ClearDataInputSearch()
+    }else{
+      props.getDataInputSearch(handleInput)
+      props.getSearchViolation(handleInput);
+    }
   };
   const handleEnter = (e) => {
+
     // console.log(e,"eeeee");
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && handleInput!='') {
+      props.getDataInputSearch(handleInput)
       props.getSearchViolation(handleInput);
+    }else if(e.key === "Enter" && handleInput===''){
+      console.log('fsdfsd');
+      
+      props.ClearDataInputSearch()
     }
   };
   return (

@@ -2,45 +2,30 @@ import React, { useState, useRef } from "react";
 import { Marker, InfoWindow } from "react-google-maps";
 import iconmk from "../../../../public/assets/ic_parking.png";
 import { makeStyles } from "@material-ui/core/styles";
-import image from "../../../../public/assets/violation.jpg";
+import image from "../../../../public/assets/markerCamera.png";
 import img from "../../../../public/assets/img.jpg";
 import Typography from "@material-ui/core/Typography";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import { TableHead, TableRow, TableCell, Checkbox } from "@material-ui/core";
-import TableContainer from "@material-ui/core/TableContainer";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import Button from "@material-ui/core/Button";
-import SendIcon from "@material-ui/icons/Send";
+// import Dialog from "@material-ui/core/Dialog";
+// import DialogTitle from "@material-ui/core/DialogTitle";
+// import DialogActions from "@material-ui/core/DialogActions";
+// import { TableHead, TableRow, TableCell, Checkbox } from "@material-ui/core";
+// import TableContainer from "@material-ui/core/TableContainer";
+// import Table from "@material-ui/core/Table";
+// import TableBody from "@material-ui/core/TableBody";
+// import Button from "@material-ui/core/Button";
+// import SendIcon from "@material-ui/icons/Send";
 import Slider from "react-slick";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import Lightbox from "react-image-lightbox";
-
-function MarkerComponent(props) {
-  var iconmarker = {
-    url: iconmk,
-    scaledSize: new window.google.maps.Size(40, 40),
-  };
+import {
+  LightgalleryProvider,
+  LightgalleryItem,
+  withLightgallery,
+  useLightgallery,
+} from "react-lightgallery";
+const OpenButtonWithHook = (props) => {
   const classes = useStyles();
-  const [opendialog, setOpendialog] = useState(false);
-  const [openImage, setOpenImage] = useState(false);
-  const[photoIndex,setPhotoIndex]=useState(0)
-  const dialogtable = () => {
-    setOpendialog(true);
-  };
-  const handleClose = () => {
-    setOpendialog(false);
-    setOpenImage(false);
-  };
-  const handleToggle = () => {
-    props.clearInfowindow();
-  };
   const ref = useRef({});
-  console.log(ref);
-  
   const settings = {
     dots: true,
     speed: 500,
@@ -52,26 +37,62 @@ function MarkerComponent(props) {
   const prev = () => {
     ref.current.slickNext();
   };
-  const showImage = () => {
 
-    setOpenImage(true);
+  const { openGallery } = useLightgallery();
+  return (
+    <>
+      <Slider {...settings} className={classes.slider} ref={ref}>
+        {props.marker.images.map((image, index) => (
+          <div>
+            <img
+              className={classes.imgpopup}
+              src={image}
+              onClick={() => openGallery("item1")}
+            ></img>
+          </div>
+        ))}
+      </Slider>
+      <div class={classes.slidebutton}>
+        <div className={classes.next} onClick={() => next()}>
+          <NavigateBeforeIcon className={classes.iconbutton} />
+        </div>
+        <div className={classes.prev} onClick={() => prev()}>
+          <NavigateNextIcon className={classes.iconbutton} />
+        </div>
+      </div>
+    </>
+  );
+};
+
+function MarkerComponent(props) {
+  var iconmarker = {
+    url: image,
+    scaledSize: new window.google.maps.Size(40, 40),
   };
-  const images = [
-    {image:image},
-    {image:img},
-  ];
-
+  const classes = useStyles();
+  const dialogtable = () => {
+    setOpendialog(true);
+  };
+  const handleClose = () => {
+    setOpendialog(false);
+    setOpenImage(false);
+  };
+  const handleToggle = () => {
+    props.clearInfowindow();
+  };
   const [opacity, setOpacity] = useState(0);
+  const time= new Date(props.marker.createdAt).getDate()
+  console.log(props.marker.createdAt);
+  
   return (
     <Marker
       position={{
-        lat: parseFloat(props.marker.lat),
-        lng: parseFloat(props.marker.lng),
+        lat: parseFloat(props.marker.camera.lat),
+        lng: parseFloat(props.marker.camera.lng),
       }}
       icon={iconmarker}
     >
-      {props.Infowindow.lat === props.lat &&
-      props.Infowindow.lng === props.lng ? (
+      {props.Infowindow === props.marker.id ? (
         <InfoWindow onCloseClick={() => handleToggle()}>
           <div className={classes.Info}>
             <div
@@ -83,143 +104,62 @@ function MarkerComponent(props) {
               }}
               className={classes.slidercontent}
             >
-              <Slider {...settings} className={classes.slider} ref={ref}>
-                <div onClick={() => showImage()}>
-                  <img className={classes.imgpopup} src={image}></img>
+              <LightgalleryProvider>
+                {props.marker.images.map((item) => (
+                  <div
+                    styles={{
+                      maxWidth: "250px",
+                      width: "100px",
+                      padding: "5px",
+                    }}
+                  >
+                    <LightgalleryItem
+                      group="item1"
+                      src={item}
+                    ></LightgalleryItem>
+                  </div>
+                ))}
+                <div className={classes.slidercontent} id="slider">
+                  <OpenButtonWithHook marker={props.marker} />
                 </div>
-                <div>
-                  <img className={classes.imgpopup} src={image}></img>
-                </div>
-                <div>
-                  <img className={classes.imgpopup} src={image}></img>
-                </div>
-              </Slider>
-              <div style={{ opacity: opacity }} class={classes.slidebutton}>
-                <div className={classes.next} onClick={() => next()}>
-                  <NavigateBeforeIcon className={classes.iconbutton} />
-                </div>
-                <div className={classes.prev} onClick={() => prev()}>
-                  <NavigateNextIcon className={classes.iconbutton} />
-                </div>
-              </div>
+              </LightgalleryProvider>
             </div>
             <div className={classes.titlepopup}>
               <Typography variant="subtitle1" className={classes.font}>
                 <b className={classes.title}>Tuyến đường:</b>
-                {props.marker.stress}
+                {props.marker.address}
               </Typography>
               <Typography variant="subtitle1" className={classes.font}>
                 <b className={classes.title}>Biển số:</b>
-                {props.marker.vehicle}
+                {props.marker.numberPlate}
               </Typography>
               <Typography variant="subtitle1" className={classes.font}>
                 <b className={classes.title}>Ngày vi phạm:</b>
-                {props.marker.date}
+                {time}
+                {/* {props.marker.createdAt.getDate()} */}
               </Typography>
-              <div
-                //   className={classes.infotitlepopup}
-                onClick={() => dialogtable()}
-              >
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.infotitlepopup}
-                >
-                  chi tiết <SendIcon className={classes.icon} />
-                </Button>
-                {/* <a className={classes.infotitlepopup}>thông tin chi tiết...</a> */}
-              </div>
+              <div onClick={() => dialogtable()}></div>
             </div>
           </div>
         </InfoWindow>
-      ) : null}
-      {
-          openImage?(
-            <Lightbox
-            mainSrc={images[photoIndex].image}
-            nextSrc={images[(photoIndex + 1) % images.length]}
-            prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-            onCloseRequest={() => (setOpenImage(false))}
-            onMovePrevRequest={() =>
-            
-                setPhotoIndex((photoIndex + images.length - 1) % images.length)
-              }
-            onMoveNextRequest={() =>
-         
-                setPhotoIndex((photoIndex + 1) % images.length)
-              }
-          />
-          ):null
-      }
-      {opendialog ? (
-        <Dialog
-          open={opendialog}
-          onClose={() => handleClose()}
-          aria-labelledby="form-dialog-title"
-          className={classes.dialog}
-        >
-          <DialogTitle id="form-dialog-title">Chi tiết vi phạm</DialogTitle>
-          <Table className={classes.table} aria-label="simple table">
-            {/* <TableHead> */}
-            <TableRow>
-              <TableCell align="center"> Ảnh </TableCell>
-              <TableCell component="th" scope="row">
-                <img src={image} className={classes.imagepopup}></img>
-                {/* {props.marker.image} */}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center"> Loại vi phạm </TableCell>
-              <TableCell component="th" scope="row">
-                {props.marker.type}
-                {/* {props.marker.image} */}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center"> Ngày vi phạm </TableCell>
-              <TableCell component="th" scope="row">
-                {props.marker.date}
-                {/* {props.marker.image} */}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center"> Tuyến đường vi phạm </TableCell>
-              <TableCell component="th" scope="row">
-                {props.marker.stress}
-                {/* {props.marker.image} */}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center"> Loại phương tiện </TableCell>
-              <TableCell component="th" scope="row">
-                {props.marker.typeVehicle}
-                {/* {props.marker.image} */}
-              </TableCell>
-            </TableRow>
-            {/* </TableHead> */}
-          </Table>
-          {/* <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={handleClose} color="primary">
-                Subscribe
-              </Button>
-            </DialogActions> */}
-        </Dialog>
       ) : null}
     </Marker>
   );
 }
 export default MarkerComponent;
 const useStyles = makeStyles((theme) => ({
-  Info: {},
+  Info: {
+    cursor: "pointer",
+  },
   slider: {
     width: 450,
   },
   slidercontent: {
     width: "100%",
     position: "relative",
+    "&:hover div:last-child": {
+      opacity: 1,
+    },
   },
   slidebutton: {
     transition: "0.2s",
@@ -228,6 +168,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
+    opacity: 0,
   },
   imgpopup: {
     width: "450px",
