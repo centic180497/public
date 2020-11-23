@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Marker, InfoWindow } from "react-google-maps";
 import iconmk from "../../../../public/assets/ic_parking.png";
 import { makeStyles } from "@material-ui/core/styles";
-import image from "../../../../public/assets/markerCamera.png";
+import image from "../../../../public/assets/mX.png";
 import img from "../../../../public/assets/img.jpg";
 import Typography from "@material-ui/core/Typography";
 // import Dialog from "@material-ui/core/Dialog";
@@ -67,7 +67,7 @@ const OpenButtonWithHook = (props) => {
 function MarkerComponent(props) {
   var iconmarker = {
     url: image,
-    scaledSize: new window.google.maps.Size(40, 40),
+    scaledSize: new window.google.maps.Size(40, 45),
   };
   const classes = useStyles();
   const dialogtable = () => {
@@ -81,8 +81,8 @@ function MarkerComponent(props) {
     props.clearInfowindow();
   };
   const [opacity, setOpacity] = useState(0);
-  const time= new Date(props.marker.createdAt).getDate()
-  console.log(props.marker.createdAt);
+  const time= new Date(props.marker.createdAt).getDate()+'-'+ new Date(props.marker.createdAt).getMonth()+'-'+new Date(props.marker.createdAt).getFullYear()
+  
   
   return (
     <Marker
@@ -169,9 +169,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     opacity: 0,
+    height:0
   },
   imgpopup: {
-    width: "450px",
+    width: "100%",
+    // height:245
+    height:'auto'
   },
   title: {
     fontWeight: 500,

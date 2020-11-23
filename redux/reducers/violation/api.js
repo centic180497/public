@@ -11,8 +11,18 @@ function getSearchViolation(state = initialRequestState(), action) {
     action
   );
 }
+function getNoparkingViolation(state = initialRequestState(), action) {
+    return handleRequest(
+      SearchViolation.GET_NOPARKING_VIOLATION_SUCCESS,
+     SearchViolation.GET_NOPARKING_VIOLATION_REQUEST,
+      SearchViolation.GET_NOPARKING_VIOLATION_FAILUTE,
+      state,
+      action
+    );
+  }
 export default combineReducers({
   getSearchViolation,
+  getNoparkingViolation
 });
 // const initialState = {
 //   Violation: [],

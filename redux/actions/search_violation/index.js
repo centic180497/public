@@ -40,3 +40,20 @@ export function ClearDataInputSearch(){
         type:SearchViolation.CLEAR_DATA_SEARCH,
     }
 }
+export function getNoparkingViolationRequest(){
+    return{
+        type:SearchViolation.GET_NOPARKING_VIOLATION_REQUEST,
+    }
+}
+export function getNoparkingViolationSuccess(data){
+    return{
+        type:SearchViolation.GET_NOPARKING_VIOLATION_SUCCESS,
+        payload:data
+    }
+}
+export function getNoparkingViolationFailute(err){
+    return{
+        type:SearchViolation.GET_NOPARKING_VIOLATION_FAILUTE,
+        err
+    }
+}

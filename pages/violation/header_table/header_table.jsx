@@ -9,6 +9,7 @@ import { useDemoData } from "@material-ui/x-grid-data-generator";
 import Pagination from "@material-ui/lab/Pagination";
 import Typography from "@material-ui/core/Typography";
 import LogoData from "../../../public/assets/edit.gif";
+import {RequestStatus} from '../../../utils/constants'
 // import { Scrollbars } from 'react-custom-scrollbars';
 
 function HeaderTable(props) {
@@ -25,6 +26,7 @@ function HeaderTable(props) {
     const { plate } = props;
     props.getSearchViolation({ plate, page });
   };
+
   return (
     <>
       <div
@@ -34,88 +36,102 @@ function HeaderTable(props) {
           overflowY: "scroll",
         }}
       >
-        <Table stickyHeader className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">
-                <Typography className={classes.tabletitle}> Ảnh </Typography>
-              </TableCell>
-              <TableCell align="center">
-                {" "}
-                <Typography className={classes.tabletitle}>
+        {props.vehicle.data?.length ? (
+          <Table
+            stickyHeader
+            className={classes.table}
+            aria-label="simple table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">
+                  <Typography className={classes.tabletitle}> Ảnh </Typography>
+                </TableCell>
+                <TableCell align="center">
                   {" "}
-                  Biển số{" "}
-                </Typography>
-              </TableCell>
-              <TableCell align="center">
-                <Typography className={classes.tabletitle}>
-                  Lỗi vi phạm{" "}
-                </Typography>
-              </TableCell>
-              <TableCell align="center">
-                {" "}
-                <Typography className={classes.tabletitle}>
-                  Tuyến đường vi phạm{" "}
-                </Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          {props.vehicle.data?.length ? (
-            props.vehicle.data.map((historyRow) => (
-              <TableBody>
-                <TableRow
-                  onClick={(e) => itemActive(e, historyRow)}
-                  className={
-                    props.Infowindow.id === historyRow.id
-                      ? classes.tablerow
-                      : classes.untablerow
-                  }
-                >
-                  <TableCell align="center" className={classes.tablecell}>
-                    <img
-                      src={historyRow.thumnail}
-                      className={classes.imagepopup}
-                    ></img>
-                  </TableCell>
-                  <TableCell align="center">
-                    <b className={classes.font}>{historyRow.numberPlate}</b>
+                  <Typography className={classes.tabletitle}>
+                    {" "}
+                    Biển số{" "}
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography className={classes.tabletitle}>
+                    Lỗi vi phạm{" "}
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  {" "}
+                  <Typography className={classes.tabletitle}>
+                    Tuyến đường vi phạm{" "}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            {props.ButtonSearch
+              ? props.vehicle.data.map((historyRow) => (
+                  <TableBody>
+                    <TableRow
+                      onClick={(e) => itemActive(e, historyRow)}
+                      className={
+                        props.Infowindow.id === historyRow.id
+                          ? classes.tablerow
+                          : classes.untablerow
+                      }
+                    >
+                      <TableCell align="center" className={classes.tablecell}>
+                        <img
+                          src={historyRow.thumnail}
+                          className={classes.imagepopup}
+                        ></img>
+                      </TableCell>
+                      <TableCell align="center">
+                        <b className={classes.font}>{historyRow.numberPlate}</b>
 
-                    <Typography
-                      variant="body1"
-                      color="textSecondary"
-                      className={classes.colorfont}
-                    >
-                      {" "}
-                      {historyRow.vehicleType}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Typography className={classes.font}>
-                      {historyRow.violationType}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="textSecondary"
-                      className={classes.colorfont}
-                    >
-                      {historyRow.date}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Typography className={classes.font}>
-                      {historyRow.address}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            ))
-          ) : (
-            <div className={classes.icongif}>
-              {" "}
+                        <Typography
+                          variant="body1"
+                          color="textSecondary"
+                          className={classes.colorfont}
+                        >
+                          {" "}
+                          {historyRow.vehicleType}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.font}>
+                          {historyRow.violationType}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          color="textSecondary"
+                          className={classes.colorfont}
+                        >
+                          {historyRow.date}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className={classes.font}>
+                          {historyRow.address}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                ))
+              : null}
+          </Table>
+        ) : (
+          <div className={classes.icongif}>
+            {props.status===RequestStatus.STARTED?null:(
               <img src={LogoData} className={classes.imggif}></img>
-            </div>
-          )}
-        </Table>
+            )}
+            {props.ButtonSearch && props.plate === "" ? (
+              <div>
+                <Typography className={classes.titleSearch}>
+                  Không tìm thấy kết quả tìm kiếm:{props.plate}
+                </Typography>
+              </div>
+            ) : null}
+          </div>
+        )}
       </div>
       {props.vehicle.data?.length ? (
         <div className={classes.pagination}>
@@ -141,6 +157,11 @@ const useStyles = makeStyles((theme) => ({
     //   // backgroundColor: 'red',
     //   width:'80%'
     // },
+  },
+  titleSearch: {
+    color: "#6d6f71",
+    fontFamily: "Nunito, sans-serif",
+    fontSize: 18,
   },
   tableWraper: {
     overflowX: "auto",
@@ -168,6 +189,7 @@ const useStyles = makeStyles((theme) => ({
   imagepopup: {
     width: 130,
     height: 100,
+    marginLeft: -12,
   },
   font: {
     fontFamily: "Nunito, sans-serif",
@@ -181,11 +203,10 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
   },
   icongif: {
-    width: 100,
+    textAlign: "center",
+    marginTop: 100,
   },
   imggif: {
-    width: 500,
-    marginTop: 100,
-    marginLeft: 100,
+    width: 600,
   },
 }));

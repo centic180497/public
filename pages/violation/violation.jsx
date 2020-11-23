@@ -1,11 +1,15 @@
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import ManageNavbar from "../../components/header/index";
 import HeaderTable from "./header_table";
 import SearchTable from "./search_violation";
 import MapViolation from "./googlemap_violation";
 import images from "../../public/assets/images.gif";
-import {RequestStatus} from '../../utils/constants'
+import { RequestStatus } from "../../utils/constants";
 export default function Violation(props) {
+  useEffect(() => {
+    props.getNoparkingViolation();
+  }, []);
   const classes = useStyles();
   return (
     <div style={{ height: "100vh" }}>
@@ -21,10 +25,10 @@ export default function Violation(props) {
           <HeaderTable />
         </div>
         {props.status === RequestStatus.STARTED ? (
-            <div className={classes.loadingrequest}>
-              <img src={images} className={classes.loadingimg} />
-            </div>
-          ) : null}
+          <div className={classes.loadingrequest}>
+            <img src={images} className={classes.loadingimg} />
+          </div>
+        ) : null}
         <div className={classes.map}>
           <MapViolation />
         </div>
@@ -32,6 +36,10 @@ export default function Violation(props) {
     </div>
   );
 }
+// Violation.getInitialProps=(props)=>{
+//   // props.getNoparkingViolation()
+//   return {noParking:props.getNoparkingViolation()}
+// }
 const useStyles = makeStyles((theme) => ({
   Searchviolation: {
     marginTop: 20,
@@ -47,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
   },
   loadingrequest: {
     position: "absolute",
-    width: "100%",
     top: "50%",
     left: "25%",
     zIndex: 1200,

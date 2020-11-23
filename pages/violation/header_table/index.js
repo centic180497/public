@@ -6,7 +6,8 @@ const mapStateToProps=({searchViolation})=>({
     vehicle:searchViolation.reducer_search_violation.Violation,
     Infowindow:searchViolation.reducer_search_violation.showInfowindow,
     plate:searchViolation.reducer_search_violation.dataInput,
-    // status:searchViolation.api.getSearchViolation.status,
+    ButtonSearch:searchViolation.reducer_search_violation.ButtonSearch,
+    status:searchViolation.api.getSearchViolation.status,
 })
 export default connect(mapStateToProps,{
     showInfowindow,

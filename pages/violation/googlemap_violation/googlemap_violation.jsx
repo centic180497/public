@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import MarkerComponent from "../googlemap_violation/marker";
 import ReactDOM from "react-dom";
 import { GoogleMap, InfoWindow } from "react-google-maps";
-import ShapeNoparking from "../googlemap_violation/marker";
+import ShapeNoparking from "../googlemap_violation/marker/shape_noparking";
 import CustomInfoWindow from "../googlemap_violation/custominfowindow";
 import ReactDOMServer from "react-dom/server";
 import Slider from "react-slick";
@@ -186,137 +186,137 @@ function MapViolation(props) {
   const [map, setMap] = useState(null);
   const [infoWindowShape, setInfoWindowShape] = useState(null);
   const [opacity, setOpacity] = useState(0);
-  // useEffect(() => {
-  //   let value = vehicle.filter((data) => data.id === props.Infowindow.id);
-  //   if (value.length) {
-  //     let e = { ...value[0] };
-  //     if (e.path.length % 2 !== 0) {
-  //       let index = Math.ceil(e.path.length / 2);
-  //       e.latLng = e.path[index];
-  //     } else {
-  //       let pointFirst;
-  //       let pointLast;
-  //       if (e.path.length < 3) {
-  //         pointFirst = e.path[0];
-  //         pointLast = e.path[1];
-  //       } else {
-  //         let i = e.path.length / 2;
-  //         pointFirst = e.path[i];
-  //         pointLast = e.path[i + 1];
-  //       }
-  //       let lat = (pointFirst.lat + pointLast.lat) / 2;
-  //       let lng = (pointFirst.lng + pointLast.lng) / 2;
+  useEffect(() => {
+    let value = vehicle.filter((data) => data.id === props.Infowindow.id);
+    if (value.length) {
+      let e = { ...value[0] };
+      if (e.path.length % 2 !== 0) {
+        let index = Math.ceil(e.path.length / 2);
+        e.latLng = e.path[index];
+      } else {
+        let pointFirst;
+        let pointLast;
+        if (e.path.length < 3) {
+          pointFirst = e.path[0];
+          pointLast = e.path[1];
+        } else {
+          let i = e.path.length / 2;
+          pointFirst = e.path[i];
+          pointLast = e.path[i + 1];
+        }
+        let lat = (pointFirst.lat + pointLast.lat) / 2;
+        let lng = (pointFirst.lng + pointLast.lng) / 2;
 
-  //       e.latLng = { lat, lng };
-  //     }
-  //     showInfoWindowShape(e);
-  //   }
-  // }, [props.Infowindow]);
+        e.latLng = { lat, lng };
+      }
+      showInfoWindowShape(e);
+    }
+  }, [props.Infowindow]);
   // const { openGallery } = useLightgallery();
-  // const clearInfoWindow = () => {
-  //   if (infoWindowShape) {
-  //     infoWindowShape.open(null);
-  //   }
-  // };
-  // const handleClose = () => {
-  //   setOpendialog(false);
-  // };
-  // const next = () => {
-  //   ref.current.slickPrev();
-  // };
-  // const prev = () => {
-  //   ref.current.slickNext();
-  // };
+  const clearInfoWindow = () => {
+    if (infoWindowShape) {
+      infoWindowShape.open(null);
+    }
+  };
+  const handleClose = () => {
+    setOpendialog(false);
+  };
+  const next = () => {
+    ref.current.slickPrev();
+  };
+  const prev = () => {
+    ref.current.slickNext();
+  };
 
-  // const showInfoWindowShape = (e) => {
-  //   clearInfoWindow();
-  //   const settings = {
-  //     dots: true,
-  //     speed: 500,
-  //     slidesToShow: 1,
-  //   };
-  //   // const { openGallery } = useLightgallery();
-  //   // const { openGallery } = useLightgallery();
-  //   const slide = (
-  //     <React.Fragment>
-  //       <LightgalleryProvider>
-  //         {images.map((item) => (
-  //           // <LightgalleryItem image={item}></LightgalleryItem>
-  //           <div
-  //             styles={{
-  //               maxWidth: "250px",
-  //               width: "100px",
-  //               padding: "5px",
-  //             }}
-  //           >
-  //             <LightgalleryItem group="item1" src={item}>
-  //               {/* <img src={item} style={{ width: "100%" }} /> */}
-  //             </LightgalleryItem>
-  //           </div>
-  //         ))}
-  //         <div
-  //           onMouseOver={() => {
-  //             setOpacity(1);
-  //           }}
-  //           onMouseOut={() => {
-  //             setOpacity(0);
-  //           }}
-  //           className={classes.slidercontent}
-  //           id="slider"
-  //         >
-  //           <OpenButtonWithHook />
-  //         </div>
-  //       </LightgalleryProvider>
-  //     </React.Fragment>
-  //   );
-  //   // const button = (
-  //   //   <React.Fragment>
-  //   //     <div onClick={() => dialogtable()} id="button">
-  //   //       <Button
-  //   //         variant="outlined"
-  //   //         color="primary"
-  //   //         className={classes.infotitlepopup}
-  //   //       >
-  //   //         chi tiết <SendIcon className={classes.icon} />
-  //   //       </Button>
-  //   //     </div>
-  //   //   </React.Fragment>
-  //   // );
-  //   const Popup = <CustomInfoWindow info={e} />;
-  //   let infoWindow = new window.google.maps.InfoWindow({
-  //     content: ``,
-  //   });
+  const showInfoWindowShape = (e) => {
+    clearInfoWindow();
+    const settings = {
+      dots: true,
+      speed: 500,
+      slidesToShow: 1,
+    };
+    // const { openGallery } = useLightgallery();
+    // const { openGallery } = useLightgallery();
+    const slide = (
+      <React.Fragment>
+        <LightgalleryProvider>
+          {images.map((item) => (
+            // <LightgalleryItem image={item}></LightgalleryItem>
+            <div
+              styles={{
+                maxWidth: "250px",
+                width: "100px",
+                padding: "5px",
+              }}
+            >
+              <LightgalleryItem group="item1" src={item}>
+                {/* <img src={item} style={{ width: "100%" }} /> */}
+              </LightgalleryItem>
+            </div>
+          ))}
+          <div
+            onMouseOver={() => {
+              setOpacity(1);
+            }}
+            onMouseOut={() => {
+              setOpacity(0);
+            }}
+            className={classes.slidercontent}
+            id="slider"
+          >
+            <OpenButtonWithHook />
+          </div>
+        </LightgalleryProvider>
+      </React.Fragment>
+    );
+    // const button = (
+    //   <React.Fragment>
+    //     <div onClick={() => dialogtable()} id="button">
+    //       <Button
+    //         variant="outlined"
+    //         color="primary"
+    //         className={classes.infotitlepopup}
+    //       >
+    //         chi tiết <SendIcon className={classes.icon} />
+    //       </Button>
+    //     </div>
+    //   </React.Fragment>
+    // );
+    const Popup = <CustomInfoWindow info={e} />;
+    let infoWindow = new window.google.maps.InfoWindow({
+      content: ``,
+    });
 
-  //   if (map) {
-  //     let content = ReactDOMServer.renderToString(Popup);
+    if (map) {
+      let content = ReactDOMServer.renderToString(Popup);
 
-  //     infoWindow.setPosition(e.latLng);
-  //     infoWindow.setContent(content);
-  //     infoWindow.open(map);
+      infoWindow.setPosition(e.latLng);
+      infoWindow.setContent(content);
+      infoWindow.open(map);
 
-  //     window.google.maps.event.addListener(infoWindow, "domready", function () {
-  //       ReactDOM.render(
-  //         React.Children.only(slide),
-  //         document.getElementById("slide")
-  //         // document.getElementById("button")
-  //       );
-  //     });
-  //     // window.google.maps.event.addListener(infoWindow, "domready", function () {
-  //     //   ReactDOM.render(
-  //     //     React.Children.only(button),
-  //     //     document.getElementById("button")
-  //     //   );
-  //     // });
-  //     setInfoWindowShape(infoWindow);
-  //   }
-  // };
-  // const mapEvent = (ref) => {
-  //   if (ref) {
-  //     setMap(ref.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
-  //   }
-  // };
+      window.google.maps.event.addListener(infoWindow, "domready", function () {
+        ReactDOM.render(
+          React.Children.only(slide),
+          document.getElementById("slide")
+          // document.getElementById("button")
+        );
+      });
+      // window.google.maps.event.addListener(infoWindow, "domready", function () {
+      //   ReactDOM.render(
+      //     React.Children.only(button),
+      //     document.getElementById("button")
+      //   );
+      // });
+      setInfoWindowShape(infoWindow);
+    }
+  };
+  const mapEvent = (ref) => {
+    if (ref) {
+      setMap(ref.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
+    }
+  };
   const onChangeMapClick = () => {
-    // clearInfoWindow();
+    clearInfoWindow();
     props.clearInfowindow();
   };
 
@@ -329,26 +329,34 @@ function MapViolation(props) {
         // ref={mapEvent}
         // onClick={(e) => handleMap(e)}
       >
-        {props.vehicle.data?.length
+        {props.noParking?.length
+          ? props.noParking.map((marker, index) => {
+              return (
+                <ShapeNoparking
+                  marker={marker}
+                  key={index}
+                  id={marker.id}
+                  ref={ref}
+                  handleClose={() => handleClose()}
+                  // opendialog={opendialog}
+                  // shapeRef={shapeRef}
+                />
+              );
+            })
+          : null}
+        {props.vehicle.data?.length > 0
           ? props.vehicle.data.map((marker, index) => {
               // console.log(marker);
               return (
-                // <ShapeNoparking
-                //   marker={marker}
-                //   key={index}
-                //   id={marker.id}
-                //   // ref={ref}
-                //   handleClose={() => handleClose()}
-                //   opendialog={opendialog}
-                //   shapeRef={shapeRef}
-                // />
-                <MarkerComponent
-                  marker={marker}
-                  key={index}
-                  // id={marker.id}
-                  lat={marker.camera.lat}
-                  lng={marker.camera.lng}
-                />
+                <>
+                  <MarkerComponent
+                    marker={marker}
+                    key={index}
+                    // id={marker.id}
+                    lat={marker.camera.lat}
+                    lng={marker.camera.lng}
+                  />
+                </>
               );
             })
           : null}

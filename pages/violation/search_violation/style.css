@@ -2,3 +2,6 @@
     position: relative !important;
     border-radius: 4px 0 0 4px !important;
 }
+.MuiInputLabel-outlined.MuiInputLabel-marginDense{
+    font-family: Nunito,sans-serif !important;
+}

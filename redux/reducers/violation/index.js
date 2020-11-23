@@ -3,7 +3,9 @@ import api from "./api";
 import { combineReducers } from "redux";
 const INITIAL_STATE = {
   Violation: [],
-  dataInput:'',
+  dataInput: "",
+  noParking:[],
+  ButtonSearch: false,
   showInfowindow: {
     id: null,
     info: null,
@@ -36,12 +38,20 @@ const reducer_search_violation = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         dataInput: action.payload,
+        ButtonSearch: true,
       };
-      case SearchViolation.CLEAR_DATA_SEARCH:
-        return{
-          ...state,
-          Violation:[]
-        }
+    case SearchViolation.CLEAR_DATA_SEARCH:
+      return {
+        ...state,
+        Violation: [],
+        // dataInput: "",
+      };
+    case SearchViolation.GET_NOPARKING_VIOLATION_SUCCESS:
+      return {
+        ...state,
+        noParking: action.payload,
+        // dataInput: "",
+      };
 
     default:
       return state;

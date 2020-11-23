@@ -8,4 +8,4 @@ const mapStateToProps=({searchViolation})=>({
 })
 export default connect(mapStateToProps,{
     clearInfowindow
-}) (MarkerComponent)
+}) (MarkerComponent,ShapeNoparking)

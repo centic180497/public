@@ -8,29 +8,30 @@ function SearchTable(props) {
   const classes = useStyles();
   const vehicle = [{ name: "Xe máy" }, { name: "Ô tô" }];
   const vehicle1 = [{ name: "Trần Phú" }, { name: "Bạch Đằng" }];
-  const [handleInput, setHandleInput] = useState('');
+  const [handleInput, setHandleInput] = useState("");
   const hanleInputChange = (e) => {
     // console.log(e);
     setHandleInput(e.target.value);
   };
   const clickSearch = () => {
-    if(handleInput===''){
-      props.ClearDataInputSearch()
-    }else{
-      props.getDataInputSearch(handleInput)
+    if (props.status != handleInput) {
+      props.ClearDataInputSearch();
+      props.clearInfowindow();
+      props.getDataInputSearch(handleInput);
+      props.getSearchViolation(handleInput);
+    } else if (handleInput) {
+      props.getDataInputSearch(handleInput);
       props.getSearchViolation(handleInput);
     }
   };
   const handleEnter = (e) => {
-
-    // console.log(e,"eeeee");
-    if (e.key === "Enter" && handleInput!='') {
-      props.getDataInputSearch(handleInput)
+    if (e.key === "Enter" && props.status != handleInput) {
+      props.ClearDataInputSearch();
+      props.clearInfowindow();
+      props.getDataInputSearch(handleInput);
       props.getSearchViolation(handleInput);
-    }else if(e.key === "Enter" && handleInput===''){
-      console.log('fsdfsd');
-      
-      props.ClearDataInputSearch()
+    } else if (e.key === "Enter" && handleInput === "") {
+      props.ClearDataInputSearch();
     }
   };
   return (
@@ -50,6 +51,7 @@ function SearchTable(props) {
           onClick={() => clickSearch()}
           // color="primary"
           className={classes.infotitlepopup}
+          // disabled={handleInput!=''?false:true}
         >
           <SearchSharpIcon className={classes.icon} />
         </Button>
@@ -62,9 +64,7 @@ export default SearchTable;
 
 const useStyles = makeStyles((theme) => ({
   search: {
-    // display: "flex",
     padding: 20,
-    // background: "#e8dbdb1c",
   },
   searchauto: {
     width: "100%",
@@ -88,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bodertext: {
     borderRadius: "4px 0 0 4px",
+    fontFamily: "Nunito, sans-serif",
   },
   infotitlepopup: {
     borderRadius: "0 4px 4px 0",
