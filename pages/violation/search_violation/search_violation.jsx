@@ -6,11 +6,8 @@ import SearchSharpIcon from "@material-ui/icons/SearchSharp";
 
 function SearchTable(props) {
   const classes = useStyles();
-  const vehicle = [{ name: "Xe máy" }, { name: "Ô tô" }];
-  const vehicle1 = [{ name: "Trần Phú" }, { name: "Bạch Đằng" }];
   const [handleInput, setHandleInput] = useState("");
   const hanleInputChange = (e) => {
-    // console.log(e);
     setHandleInput(e.target.value);
   };
   const clickSearch = () => {
@@ -49,9 +46,7 @@ function SearchTable(props) {
         <Button
           variant="outlined"
           onClick={() => clickSearch()}
-          // color="primary"
           className={classes.infotitlepopup}
-          // disabled={handleInput!=''?false:true}
         >
           <SearchSharpIcon className={classes.icon} />
         </Button>

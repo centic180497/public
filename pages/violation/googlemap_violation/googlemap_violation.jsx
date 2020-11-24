@@ -5,319 +5,229 @@ import MarkerComponent from "../googlemap_violation/marker";
 import ReactDOM from "react-dom";
 import { GoogleMap, InfoWindow } from "react-google-maps";
 import ShapeNoparking from "../googlemap_violation/marker/shape_noparking";
-import CustomInfoWindow from "../googlemap_violation/custominfowindow";
-import ReactDOMServer from "react-dom/server";
-import Slider from "react-slick";
-import Button from "@material-ui/core/Button";
-import SendIcon from "@material-ui/icons/Send";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import image from "../../../public/assets/violation.jpg";
-import img from "../../../public/assets/img.jpg";
-import img2 from "../../../public/assets/doxechanle.jpg";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Table from "@material-ui/core/Table";
-import { TableHead, TableRow, TableCell, Checkbox } from "@material-ui/core";
-// import Lightbox from "react-image-lightbox";
+import clsx from "clsx";
+import { TypeNoParkingOptions } from "../../../utils/constants";
+import { Typography } from "@material-ui/core";
 import {
-  LightgalleryProvider,
-  LightgalleryItem,
-  withLightgallery,
-  useLightgallery,
-} from "react-lightgallery";
+  Timeline as TimelineIcon,
+  LocalParking as LocalParkingIcon,
+  ArrowRight as ArrowRightIcon,
+  ArrowLeft as ArrowLeftIcon,
+  Clear as ClearIcon,
+  ChevronLeft as ChevronLeftIcon,
+} from "@material-ui/icons";
+// import Lightbox from "react-image-lightbox";
+// import {
+//   LightgalleryProvider,
+//   LightgalleryItem,
+//   withLightgallery,
+//   useLightgallery,
+// } from "react-lightgallery";
 
-const OpenButtonWithHook = (props) => {
-  const classes = useStyles();
-  const ref = useRef({});
-  const settings = {
-    dots: true,
-    speed: 500,
-    slidesToShow: 1,
-  };
-  const next = () => {
-    ref.current.slickPrev();
-  };
-  const prev = () => {
-    ref.current.slickNext();
-  };
+// const OpenButtonWithHook = (props) => {
+//   const classes = useStyles();
+//   const ref = useRef({});
+//   const settings = {
+//     dots: true,
+//     speed: 500,
+//     slidesToShow: 1,
+//   };
+//   const next = () => {
+//     ref.current.slickPrev();
+//   };
+//   const prev = () => {
+//     ref.current.slickNext();
+//   };
 
-  const { openGallery } = useLightgallery();
-  return (
-    <>
-      <Slider {...settings} className={classes.slider} ref={ref}>
-        <div>
-          <img
-            className={classes.imgpopup}
-            src={image}
-            {...props}
-            onClick={() => openGallery("item1")}
-          ></img>
-        </div>
-        <div>
-          <img
-            className={classes.imgpopup}
-            src={img}
-            {...props}
-            onClick={() => openGallery("item1")}
-          ></img>
-        </div>
-        <div>
-          <img
-            className={classes.imgpopup}
-            src={img2}
-            {...props}
-            onClick={() => openGallery("item1")}
-          ></img>
-        </div>
-        {/* <OpenGallery222 classes={classes.imgpopup} image={image} /> */}
-      </Slider>
-      <div className={classes.slidebutton}>
-        <div className={classes.next} onClick={() => next()}>
-          <NavigateBeforeIcon className={classes.iconbutton} />
-        </div>
-        <div className={classes.prev} onClick={() => prev()}>
-          <NavigateNextIcon className={classes.iconbutton} />
-        </div>
-      </div>
-    </>
-  );
-};
+//   const { openGallery } = useLightgallery();
+//   return (
+//     <>
+//       <Slider {...settings} className={classes.slider} ref={ref}>
+//         <div>
+//           <img
+//             className={classes.imgpopup}
+//             src={image}
+//             {...props}
+//             onClick={() => openGallery("item1")}
+//           ></img>
+//         </div>
+//         <div>
+//           <img
+//             className={classes.imgpopup}
+//             src={img}
+//             {...props}
+//             onClick={() => openGallery("item1")}
+//           ></img>
+//         </div>
+//         <div>
+//           <img
+//             className={classes.imgpopup}
+//             src={img2}
+//             {...props}
+//             onClick={() => openGallery("item1")}
+//           ></img>
+//         </div>
+//         {/* <OpenGallery222 classes={classes.imgpopup} image={image} /> */}
+//       </Slider>
+//       <div className={classes.slidebutton}>
+//         <div className={classes.next} onClick={() => next()}>
+//           <NavigateBeforeIcon className={classes.iconbutton} />
+//         </div>
+//         <div className={classes.prev} onClick={() => prev()}>
+//           <NavigateNextIcon className={classes.iconbutton} />
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
 
 function MapViolation(props) {
   const ref = useRef({});
   const lightbox = useRef();
-
   const classes = useStyles();
-
-  const vehicle = [
-    {
-      id: "1",
-      path: [
-        { lat: 16.081238661120641, lng: 108.16631503668134 },
-        { lat: 16.073486130125332, lng: 108.18519778814701 },
-      ],
-      lat: "16.04319399907483",
-      lng: "108.21515312158203",
-      image: "",
-      vehicle: "43A-11491",
-      type: "Dừng xe nơi cấm dừng cấm đỗ",
-      date: "31/10/2020",
-      stress: "Đường Trần phú,Quận hải châu",
-      Processingunit: "Sở giao thông vận tải đà nẵng",
-      typeVehicle: "Ô tô",
-      path: [
-        { lat: 16.076374774161085, lng: 108.2139774107824 },
-        { lat: 16.076052733066728, lng: 108.21375550832771 },
-        { lat: 16.076374774161085, lng: 108.2139774107824 },
-        { lat: 16.076052733066728, lng: 108.21375550832771 },
-        { lat: 16.075806437660088, lng: 108.21356892716311 },
-        { lat: 16.075754569000555, lng: 108.21352835875176 },
-        { lat: 16.07553581841805, lng: 108.21334563326262 },
-        { lat: 16.07551101163577, lng: 108.21332585197113 },
-        { lat: 16.075346062563177, lng: 108.21320012342356 },
-      ],
-    },
-    {
-      id: "2",
-      lat: "16.075300",
-      lng: "108.223558",
-      image: "",
-      vehicle: "43A-11492",
-      typeVehicle: "Ô tô",
-
-      type: "Dừng xe nơi cấm dừng cấm đỗ",
-      date: "31/10/2020",
-      stress: "Đường Trần phú,Quận hải châu",
-      Processingunit: "Sở giao thông vận tải đà nẵng",
-      path: [
-        { lat: 16.066145689229703, lng: 108.18494029608158 },
-        { lat: 16.0621866873228, lng: 108.17953296270755 },
-      ],
-    },
-    {
-      id: "3",
-      path: [
-        { lat: 16.081238661120885, lng: 108.16631503668216 },
-        { lat: 16.073486130125332, lng: 108.18519778814701 },
-      ],
-      lat: "16.077707",
-      lng: "108.223231",
-      image: "",
-      vehicle: "43A-11493",
-      type: "Dừng xe nơi cấm dừng cấm đỗ",
-      date: "31/10/2020",
-      stress: "Đường Trần phú,Quận hải châu",
-      Processingunit: "Sở giao thông vận tải đà nẵng",
-      typeVehicle: "Ô tô",
-    },
-    {
-      id: "4",
-      path: [
-        { lat: 16.06573329687323, lng: 108.20253558721927 },
-        { lat: 16.054845829552328, lng: 108.20845790472416 },
-      ],
-      lat: "16.081844",
-      lng: "108.222743",
-      image: "",
-      vehicle: "43A-11494",
-      type: "Dừng xe nơi cấm dừng cấm đỗ",
-      date: "31/10/2020",
-      stress: "Đường Trần phú,Quận hải châu",
-      Processingunit: "Sở giao thông vận tải đà nẵng",
-      typeVehicle: "Ô tô",
-    },
-    // {
-    //   path: [
-    //     { lat: 16.066145689229703, lng: 108.18494029608158 },
-    //     { lat: 16.0621866873228, lng: 108.17953296270755 },
-    //   ],
-    //   lat: "16.074250",
-    //   lng: "108.223653",
-    //   image: "",
-    //   vehicle: "43A-11495",
-    //   type: "Dừng xe nơi cấm dừng cấm đỗ",
-    //   date: "31/10/2020",
-    //   stress: "Đường Trần phú,Quận hải châu",
-    //   Processingunit: "Sở giao thông vận tải đà nẵng",
-    //   typeVehicle: "Ô tô",
-    // },
-  ];
   const [map, setMap] = useState(null);
   const [infoWindowShape, setInfoWindowShape] = useState(null);
-  const [opacity, setOpacity] = useState(0);
-  useEffect(() => {
-    let value = vehicle.filter((data) => data.id === props.Infowindow.id);
-    if (value.length) {
-      let e = { ...value[0] };
-      if (e.path.length % 2 !== 0) {
-        let index = Math.ceil(e.path.length / 2);
-        e.latLng = e.path[index];
-      } else {
-        let pointFirst;
-        let pointLast;
-        if (e.path.length < 3) {
-          pointFirst = e.path[0];
-          pointLast = e.path[1];
-        } else {
-          let i = e.path.length / 2;
-          pointFirst = e.path[i];
-          pointLast = e.path[i + 1];
-        }
-        let lat = (pointFirst.lat + pointLast.lat) / 2;
-        let lng = (pointFirst.lng + pointLast.lng) / 2;
+  // useEffect(() => {
+  //   let value = props.noParking.filter((data) => data.id === props.Infowindow.id);
+  //   console.log(value);
 
-        e.latLng = { lat, lng };
-      }
-      showInfoWindowShape(e);
-    }
-  }, [props.Infowindow]);
+  //   if (value.length) {
+  //     let e = { ...value[0] };
+  //     console.log(e);
+
+  //     if (e.path.length % 2 !== 0) {
+  //       let index = Math.ceil(e.path.length / 2);
+  //       e.latLng = e.path[index];
+  //     } else {
+  //       let pointFirst;
+  //       let pointLast;
+  //       if (e.path.length < 3) {
+  //         pointFirst = e.path[0];
+  //         pointLast = e.path[1];
+  //       } else {
+  //         let i = e.path.length / 2;
+  //         pointFirst = e.path[i];
+  //         pointLast = e.path[i + 1];
+  //       }
+  //       let lat = (pointFirst.lat + pointLast.lat) / 2;
+  //       let lng = (pointFirst.lng + pointLast.lng) / 2;
+
+  //       e.latLng = { lat, lng };
+  //     }
+  //     console.log(e);
+
+  //     showInfoWindowShape(e);
+  //   }
+  // }, [props.Infowindow]);
   // const { openGallery } = useLightgallery();
-  const clearInfoWindow = () => {
-    if (infoWindowShape) {
-      infoWindowShape.open(null);
-    }
-  };
-  const handleClose = () => {
-    setOpendialog(false);
-  };
-  const next = () => {
-    ref.current.slickPrev();
-  };
-  const prev = () => {
-    ref.current.slickNext();
-  };
+  // const clearInfoWindow = () => {
+  //   if (infoWindowShape) {
+  //     infoWindowShape.open(null);
+  //   }
+  // };
+  // const handleClose = () => {
+  //   setOpendialog(false);
+  // };
+  // const next = () => {
+  //   ref.current.slickPrev();
+  // };
+  // const prev = () => {
+  //   ref.current.slickNext();
+  // };
 
-  const showInfoWindowShape = (e) => {
-    clearInfoWindow();
-    const settings = {
-      dots: true,
-      speed: 500,
-      slidesToShow: 1,
-    };
-    // const { openGallery } = useLightgallery();
-    // const { openGallery } = useLightgallery();
-    const slide = (
-      <React.Fragment>
-        <LightgalleryProvider>
-          {images.map((item) => (
-            // <LightgalleryItem image={item}></LightgalleryItem>
-            <div
-              styles={{
-                maxWidth: "250px",
-                width: "100px",
-                padding: "5px",
-              }}
-            >
-              <LightgalleryItem group="item1" src={item}>
-                {/* <img src={item} style={{ width: "100%" }} /> */}
-              </LightgalleryItem>
-            </div>
-          ))}
-          <div
-            onMouseOver={() => {
-              setOpacity(1);
-            }}
-            onMouseOut={() => {
-              setOpacity(0);
-            }}
-            className={classes.slidercontent}
-            id="slider"
-          >
-            <OpenButtonWithHook />
-          </div>
-        </LightgalleryProvider>
-      </React.Fragment>
-    );
-    // const button = (
-    //   <React.Fragment>
-    //     <div onClick={() => dialogtable()} id="button">
-    //       <Button
-    //         variant="outlined"
-    //         color="primary"
-    //         className={classes.infotitlepopup}
-    //       >
-    //         chi tiết <SendIcon className={classes.icon} />
-    //       </Button>
-    //     </div>
-    //   </React.Fragment>
-    // );
-    const Popup = <CustomInfoWindow info={e} />;
-    let infoWindow = new window.google.maps.InfoWindow({
-      content: ``,
-    });
+  // const showInfoWindowShape = (e) => {
+  //   clearInfoWindow();
+  //   const settings = {
+  //     dots: true,
+  //     speed: 500,
+  //     slidesToShow: 1,
+  //   };
+  //   // const { openGallery } = useLightgallery();
+  //   // const { openGallery } = useLightgallery();
+  //   const slide = (
+  //     <React.Fragment>
+  //       <LightgalleryProvider>
+  //         {images.map((item) => (
+  //           // <LightgalleryItem image={item}></LightgalleryItem>
+  //           <div
+  //             styles={{
+  //               maxWidth: "250px",
+  //               width: "100px",
+  //               padding: "5px",
+  //             }}
+  //           >
+  //             <LightgalleryItem group="item1" src={item}>
+  //               {/* <img src={item} style={{ width: "100%" }} /> */}
+  //             </LightgalleryItem>
+  //           </div>
+  //         ))}
+  //         <div
+  //           onMouseOver={() => {
+  //             setOpacity(1);
+  //           }}
+  //           onMouseOut={() => {
+  //             setOpacity(0);
+  //           }}
+  //           className={classes.slidercontent}
+  //           id="slider"
+  //         >
+  //           <OpenButtonWithHook />
+  //         </div>
+  //       </LightgalleryProvider>
+  //     </React.Fragment>
+  //   );
+  //   // const button = (
+  //   //   <React.Fragment>
+  //   //     <div onClick={() => dialogtable()} id="button">
+  //   //       <Button
+  //   //         variant="outlined"
+  //   //         color="primary"
+  //   //         className={classes.infotitlepopup}
+  //   //       >
+  //   //         chi tiết <SendIcon className={classes.icon} />
+  //   //       </Button>
+  //   //     </div>
+  //   //   </React.Fragment>
+  //   // );
+  //   const Popup = <CustomInfoWindow info={e} />;
+  //   let infoWindow = new window.google.maps.InfoWindow({
+  //     content: ``,
+  //   });
 
-    if (map) {
-      let content = ReactDOMServer.renderToString(Popup);
+  //   if (map) {
+  //     let content = ReactDOMServer.renderToString(Popup);
 
-      infoWindow.setPosition(e.latLng);
-      infoWindow.setContent(content);
-      infoWindow.open(map);
+  //     infoWindow.setPosition(e.latLng);
+  //     infoWindow.setContent(content);
+  //     infoWindow.open(map);
 
-      window.google.maps.event.addListener(infoWindow, "domready", function () {
-        ReactDOM.render(
-          React.Children.only(slide),
-          document.getElementById("slide")
-          // document.getElementById("button")
-        );
-      });
-      // window.google.maps.event.addListener(infoWindow, "domready", function () {
-      //   ReactDOM.render(
-      //     React.Children.only(button),
-      //     document.getElementById("button")
-      //   );
-      // });
-      setInfoWindowShape(infoWindow);
-    }
-  };
-  const mapEvent = (ref) => {
-    if (ref) {
-      setMap(ref.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
-    }
-  };
+  //     window.google.maps.event.addListener(infoWindow, "domready", function () {
+  //       ReactDOM.render(
+  //         React.Children.only(slide),
+  //         document.getElementById("slide")
+  //         // document.getElementById("button")
+  //       );
+  //     });
+  //     // window.google.maps.event.addListener(infoWindow, "domready", function () {
+  //     //   ReactDOM.render(
+  //     //     React.Children.only(button),
+  //     //     document.getElementById("button")
+  //     //   );
+  //     // });
+  //     setInfoWindowShape(infoWindow);
+  //   }
+  // };
+  // const mapEvent = (ref) => {
+  //   if (ref) {
+  //     setMap(ref.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED);
+  //   }
+  // };
   const onChangeMapClick = () => {
-    clearInfoWindow();
+    // clearInfoWindow();
     props.clearInfowindow();
+  };
+  const handleHideBoxNote = () => {
+    props.toggleBoxNote();
   };
 
   return (
@@ -338,15 +248,12 @@ function MapViolation(props) {
                   id={marker.id}
                   ref={ref}
                   handleClose={() => handleClose()}
-                  // opendialog={opendialog}
-                  // shapeRef={shapeRef}
                 />
               );
             })
           : null}
         {props.vehicle.data?.length > 0
           ? props.vehicle.data.map((marker, index) => {
-              // console.log(marker);
               return (
                 <>
                   <MarkerComponent
@@ -361,91 +268,164 @@ function MapViolation(props) {
             })
           : null}
       </GoogleMap>
+      {props.noParking?.length && (
+        <div className={classes.note}>
+          <span
+            className={clsx(classes.toggleNote, {
+              [classes.toggleNoteHide]: !props.openNote,
+            })}
+            onClick={handleHideBoxNote}
+          >
+            {props.openNote ? <ClearIcon /> : <ChevronLeftIcon />}
+          </span>
+          <ul
+            className={clsx({
+              [classes.boxNoteHide]: !props.openNote,
+              [classes.boxNote]: props.openNote,
+            })}
+          >
+            <Typography className={classes.title}>Chú thích</Typography>
+            {TypeNoParkingOptions.map((data) => {
+              return (
+                <li key={data.id}>
+                  <TimelineIcon style={{ color: data.color }} />
+                  <span>{data.name}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </MapOptions>
   );
 }
 export default MapViolation;
 const useStyles = makeStyles(() => ({
-  slider: {
-    width: 450,
-  },
-  slidercontent: {
-    width: "100%",
-    position: "relative",
-    "&:hover div:last-child": {
-      opacity: 1,
-    },
-  },
-  slidebutton: {
-    transition: "0.2s",
-    position: "absolute",
-    top: "50%",
-    width: "100%",
-    display: "flex",
-    // height: "100%",
-    justifyContent: "space-between",
-    opacity: 0,
-    // "&:hover": {
-    //   opacity: 1,
-    // },
-  },
-  imgpopup: {
-    cursor: "pointer",
-    width: "450px",
-    height: 300,
-  },
+  // slider: {
+  //   width: 450,
+  // },
+  // slidercontent: {
+  //   width: "100%",
+  //   position: "relative",
+  //   "&:hover div:last-child": {
+  //     opacity: 1,
+  //   },
+  // },
+  // slidebutton: {
+  //   transition: "0.2s",
+  //   position: "absolute",
+  //   top: "50%",
+  //   width: "100%",
+  //   display: "flex",
+  //   justifyContent: "space-between",
+  //   opacity: 0,
+  // },
+  // imgpopup: {
+  //   cursor: "pointer",
+  //   width: "450px",
+  //   height: 300,
+  // },
   title: {
     fontWeight: 500,
     fontFamily: "Nunito, sans-serif",
   },
-  dialog: {
-    height: "100%",
-    width: "100%",
+  // dialog: {
+  //   height: "100%",
+  //   width: "100%",
+  // },
+  // imagepopup: {
+  //   width: 350,
+  // },
+  // infotitlepopup: {
+  //   cursor: "pointer",
+  //   color: "#3c16ce",
+  //   float: "right",
+  //   marginTop: "-40px",
+  // },
+  // icon: {
+  //   fontSize: 14,
+  //   marginLeft: 5,
+  // },
+  // titlepopup: {
+  //   padding: 20,
+  // },
+  // next: {
+  //   width: 30,
+  //   height: 30,
+  //   borderRadius: "50%",
+  //   transition: "0.5s",
+  //   color: "black",
+  //   cursor: "pointer",
+  //   border: "none",
+  //   backgroundColor: "white",
+  // },
+  // prev: {
+  //   width: 30,
+  //   height: 30,
+  //   borderRadius: "50%",
+  //   transition: "0.5s",
+  //   color: "black",
+  //   border: "none",
+  //   cursor: "pointer",
+  //   backgroundColor: "white",
+  // },
+  // iconbutton: {
+  //   marginTop: 2,
+  //   marginLeft: 2,
+  // },
+  // font: {
+  //   fontFamily: "Nunito, sans-serif",
+  // },
+  //note
+  note: {
+    position: "absolute",
+    top: "50%",
+    right: 10,
+    transform: "translateY(-50%)",
+    "& ul": {
+      padding: 10,
+      listStyle: "none",
+      margin: 0,
+      background: "#fafafa",
+      transition: ".3s ease-in-out",
+      borderRadius: 4,
+      position: "relative",
+      boxShadow:
+        "0 1px 2px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.07), 0 4px 8px rgba(0,0,0,0.07), 0 8px 16px rgba(0,0,0,0.07), 0 16px 32px rgba(0,0,0,0.07), 0 32px 64px rgba(0,0,0,0.07)",
+      "& li": {
+        display: "flex",
+        alignItems: "center",
+        lineHeight: "35px",
+        "& span": {
+          marginLeft: 8,
+        },
+      },
+    },
   },
-  imagepopup: {
-    width: 350,
-  },
-  infotitlepopup: {
+  toggleNote: {
+    background: "#fafafa",
+    position: "absolute",
+    top: 4,
+    right: 4,
+    width: 40,
+    height: 40,
+    textAlign: "center",
+    color: "grey",
+    display: "flex",
+    justifyContent: "center",
     cursor: "pointer",
-    color: "#3c16ce",
-    float: "right",
-    marginTop: "-40px",
-  },
-  icon: {
-    fontSize: 14,
-    marginLeft: 5,
-  },
-  titlepopup: {
-    padding: 20,
-  },
-  next: {
-    width: 30,
-    height: 30,
+    zIndex: 1,
+    alignItems: "center",
     borderRadius: "50%",
-    transition: "0.5s",
-    color: "black",
-    cursor: "pointer",
-    border: "none",
-    backgroundColor: "white",
   },
-  prev: {
-    width: 30,
-    height: 30,
-    borderRadius: "50%",
-    transition: "0.5s",
-    color: "black",
-    border: "none",
-    cursor: "pointer",
-    backgroundColor: "white",
+  toggleNoteHide: {
+    boxShadow: "-1px -5px 5px #504e4e57",
   },
-  iconbutton: {
-    marginTop: 2,
-    marginLeft: 2,
+  boxNoteHide: {
+    display: "none",
   },
-  font: {
-    fontFamily: "Nunito, sans-serif",
-  },
-  table: {
-    height: "80%",
+
+  boxNote: {
+    display: "block",
   },
 }));

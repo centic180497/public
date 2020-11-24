@@ -16,9 +16,6 @@ export default function Violation(props) {
       <div>
         <ManageNavbar />
       </div>
-      {/* <div className={classes.Searchviolation}>
-        <SearchTable/>
-      </div> */}
       <div className={classes.HeaderTable1}>
         <div className={classes.HeaderTable}>
           <SearchTable />
@@ -36,14 +33,7 @@ export default function Violation(props) {
     </div>
   );
 }
-// Violation.getInitialProps=(props)=>{
-//   // props.getNoparkingViolation()
-//   return {noParking:props.getNoparkingViolation()}
-// }
 const useStyles = makeStyles((theme) => ({
-  Searchviolation: {
-    marginTop: 20,
-  },
   HeaderTable1: {
     display: "flex",
     flex: "1 1 auto",
@@ -56,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   loadingrequest: {
     position: "absolute",
     top: "50%",
-    left: "25%",
+    left: "20%",
     zIndex: 1200,
   },
   loadingimg: {
@@ -67,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
   },
   HeaderTable: {
-    width: "45%",
+    width: "40%",
     paddingLeft: 10,
     display: "flex",
     flexDirection: "column",

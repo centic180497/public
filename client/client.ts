@@ -93,10 +93,7 @@ export default class Client {
   login = (username: string, password: string) => {};
 
   logout = () => {};
-  //searchViolation
   getSearchViolation = async (value: any) => {
-    console.log({ value });
-
     let plate = value;
     if (typeof value === "object") {
       plate = value.plate;

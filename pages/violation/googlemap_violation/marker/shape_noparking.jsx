@@ -17,7 +17,8 @@ function ShapeNoparking(props) {
       <Polyline
         path={props.marker.path}
         options={{
-          strokeColor: "red",
+          strokeColor: props.marker.color,
+          strokeWeight: 5,
         }}
       />
       {props.opendialog ? (

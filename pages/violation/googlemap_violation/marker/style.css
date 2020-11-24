@@ -26,3 +26,6 @@
     margin-right: auto !important;
     align-items: center !important;
 }
+.gm-ui-hover-effect {
+    display: none !important;
+  }

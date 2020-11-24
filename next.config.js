@@ -8,7 +8,7 @@ module.exports = {
       // Important: return the modified config
       config.module.rules.push(
           {
-            test: /\.(png|jpg|gif)$/i,
+            test: /\.(png|jpg|gif|jpeg)$/i,
             use: [
               {
                 loader: 'url-loader',

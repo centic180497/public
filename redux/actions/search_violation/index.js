@@ -57,3 +57,8 @@ export function getNoparkingViolationFailute(err){
         err
     }
 }
+export function toggleBoxNote (){
+    return{
+        type:SearchViolation.TOGGLE_HIDE_NOTE
+    }
+}

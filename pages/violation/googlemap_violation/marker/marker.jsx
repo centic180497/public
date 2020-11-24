@@ -43,11 +43,11 @@ const OpenButtonWithHook = (props) => {
     <>
       <Slider {...settings} className={classes.slider} ref={ref}>
         {props.marker.images.map((image, index) => (
-          <div>
+          <div key={index}>
             <img
               className={classes.imgpopup}
               src={image}
-              onClick={() => openGallery("item1")}
+              onClick={() => openGallery("item1",index)}
             ></img>
           </div>
         ))}
@@ -67,7 +67,7 @@ const OpenButtonWithHook = (props) => {
 function MarkerComponent(props) {
   var iconmarker = {
     url: image,
-    scaledSize: new window.google.maps.Size(40, 45),
+    scaledSize: new window.google.maps.Size(0, 0),
   };
   const classes = useStyles();
   const dialogtable = () => {
@@ -132,6 +132,10 @@ function MarkerComponent(props) {
               <Typography variant="subtitle1" className={classes.font}>
                 <b className={classes.title}>Biển số:</b>
                 {props.marker.numberPlate}
+              </Typography>
+              <Typography variant="subtitle1" className={classes.font}>
+                <b className={classes.title}>Loại vi phạm:</b>
+                {props.marker.violationType}
               </Typography>
               <Typography variant="subtitle1" className={classes.font}>
                 <b className={classes.title}>Ngày vi phạm:</b>
