@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 import Head from "next/head";
 
-import store from "../redux/stores";
+import store from '../src/redux/stores';
 import "../public/global.css";
 import "../pages/violation/googlemap_violation/marker/style.css";
 import "../pages/violation/search_violation/style.css";

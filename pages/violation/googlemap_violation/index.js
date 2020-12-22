@@ -1,6 +1,6 @@
 import MapViolation from './googlemap_violation'
 import {connect} from 'react-redux'
-import {clearInfowindow,toggleBoxNote} from '../.././../redux/actions/search_violation/index'
+import {clearInfowindow,toggleBoxNote} from '../.././../src/redux/actions/search_violation/index'
 const mapStateToProps=({searchViolation})=>({
     Infowindow:searchViolation.reducer_violation_local.showInfowindow,
     vehicle:searchViolation.reducer_search_violation.Violation,

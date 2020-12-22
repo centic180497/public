@@ -1,4 +1,4 @@
-import SiteMap from "../components/site_map";
+import SiteMap from "../src/components/site_map";
 
 export default function Home() {
   return (

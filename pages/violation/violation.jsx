@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
-import ManageNavbar from "../../components/header/index";
+import ManageNavbar from "../../src/components/header/index";
 import HeaderTable from "./header_table";
 import SearchTable from "./search_violation";
 import MapViolation from "./googlemap_violation";
 import images from "../../public/assets/images.gif";
-import { RequestStatus } from "../../utils/constants";
+import { RequestStatus } from "../../src/utils/constants";
 export default function Violation(props) {
   useEffect(() => {
     props.getNoparkingViolation();

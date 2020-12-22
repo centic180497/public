@@ -24,10 +24,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/violation": [
+    "/home-page": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/violation.js"
+      "static/chunks/pages/home-page.js"
     ]
   },
   "ampFirstPages": []

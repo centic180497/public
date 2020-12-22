@@ -9,7 +9,7 @@ import { useDemoData } from "@material-ui/x-grid-data-generator";
 import Pagination from "@material-ui/lab/Pagination";
 import Typography from "@material-ui/core/Typography";
 import LogoData from "../../../public/assets/edit.gif";
-import { RequestStatus } from "../../../utils/constants";
+import { RequestStatus } from "../../../src/utils/constants";
 import iconcar2 from "../../../public/assets/iconcar2.png";
 // import { Scrollbars } from 'react-custom-scrollbars';
 

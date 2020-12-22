@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
-import MapOptions from "../../../components/google_map_controlled";
+import MapOptions from "../../../src/components/google_map_controlled";
 import { makeStyles } from "@material-ui/core/styles";
 import MarkerComponent from "../googlemap_violation/marker";
 import ReactDOM from "react-dom";
 import { GoogleMap, InfoWindow } from "react-google-maps";
 import ShapeNoparking from "../googlemap_violation/marker/shape_noparking";
 import clsx from "clsx";
-import { TypeNoParkingOptions } from "../../../utils/constants";
+import { TypeNoParkingOptions } from "../../../src/utils/constants";
 import { Typography } from "@material-ui/core";
 import {
   Timeline as TimelineIcon,
